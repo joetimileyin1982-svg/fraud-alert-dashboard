@@ -1,24 +1,43 @@
-import SideBar from "../components/layout/SideBar";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Sidebar from "../components/layout/SideBar";
 import TopBar from "../components/layout/TopBar";
-import RightPanel from  "../components/layout/rightpanel/RightPanel";
-import Dashboard from "../pages/analyst/Dashboard";
 import "./App.css";
+
+// Analyst pages
+import AnalystDashboard from "../pages/analyst/Dashboard";
+import Transactions from "../pages/analyst/Transactions";
+import Investigation from "../pages/analyst/Investigation";
+import RiskAnalytics from "../pages/analyst/RiskAnalytics";
+import Notifications from "../pages/analyst/Notifications";
 
 function App() {
   return (
-    <div className="appShell">
-      <SideBar />
+    <BrowserRouter>
+      <div className="appShell">
+        <Sidebar />
 
-      <div className="mainArea">
-        <TopBar />
-        <div className="pageBody">
-          <div className="pageContent">
-            <Dashboard />
+        <div className="mainArea">
+          <div className="header">
+            <TopBar />
           </div>
-          <RightPanel />
+
+          <div className="pageBody">
+            <div className="pageContent">
+              <Routes>
+                <Route path="/analyst/dashboard" element={<AnalystDashboard />} />
+                <Route path="/analyst/transactions" element={<Transactions />} />
+                <Route path="/analyst/investigation" element={<Investigation />} />
+                <Route path="/analyst/risk-analytics" element={<RiskAnalytics />} />
+                <Route path="/analyst/notifications" element={<Notifications />} />
+                
+
+                <Route path="*" element={<Navigate to="/analyst/dashboard" replace />} />
+              </Routes>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

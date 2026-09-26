@@ -3,6 +3,7 @@
   flex-direction: column;
   padding: 20px 16px;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .sidebarLogo {
@@ -41,8 +42,8 @@
   border-radius: 10px;
   color: #7ea0c4;
   font-size: 14px;
+  text-decoration: none;
   cursor: pointer;
-  position: relative;
 }
 
 .navItem:hover {
@@ -52,8 +53,9 @@
 
 .navItemActive {
   background: #0d1b2a;
-  color: #00e5ff;
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
+  color: #a66cff;
+  border: 1px solid rgba(166, 108, 255, 0.3);
+  box-shadow: 0 0 12px rgba(166, 108, 255, 0.18);
 }
 
 .navBadge {
@@ -63,6 +65,7 @@
   font-size: 11px;
   padding: 1px 7px;
   border-radius: 999px;
+  box-shadow: 0 0 6px rgba(255, 0, 127, 0.6);
 }
 
 .sidebarFooter {
