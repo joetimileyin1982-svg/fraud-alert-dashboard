@@ -38,9 +38,3 @@ body {
   gap: 20px;
 }
 
-.border-pink {
-  border-color: #FF3B81;
-  box-shadow:
-    0 0 7px rgba(255, 59, 129, 0.3),
-    0 0 20px rgba(255, 59, 129, 0.1);
-}

@@ -1,11 +1,12 @@
-import react, {useState} from 'react';
+import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 
-export default function SearchBar(){
-    const [isFocused, setIsFocused] = useState(false);
-    return(
-        <div    style={{
-        flex: 1,
+export default function SearchBar() {
+  const [isFocused, setIsFocused] = useState(false);
+
+  return (
+    <div
+      style={{
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
@@ -14,14 +15,19 @@ export default function SearchBar(){
         borderRadius: '999px',
         padding: '11px 18px',
         transition: 'all 0.25s ease',
+        flex: '1 1 400px',
+        maxWidth: '480px',
         boxShadow: isFocused
-          ? '0 0 10px rgba(0,229,255,0.6), 0 0 26px rgba(0,229,255,0.25), inset 0 0 10px rgba(0,229,255,0.08)'
+          ? '0 0 10px rgba(0,229,255,0.6), 0 0 26px rgba(0,229,255,0.25)'
           : 'none',
-      }}><Search size={16}  color="#7EA0C4" />
-        <input type="text" 
-        placeholder="Search customers, transactions, device IDs..." />
-        onFocus ={() => setIsFocused(true)}
-        onBlur ={() => seIsFocused(false)}
+      }}
+    >
+      <Search size={16} color="#7EA0C4" />
+      <input
+        type="text"
+        placeholder="Search customers, transactions, device IDs..."
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         style={{
           background: 'none',
           border: 'none',
@@ -30,7 +36,7 @@ export default function SearchBar(){
           flex: 1,
           fontSize: '13px',
         }}
-        </div>
-    );
-
+      />
+    </div>
+  );
 }
