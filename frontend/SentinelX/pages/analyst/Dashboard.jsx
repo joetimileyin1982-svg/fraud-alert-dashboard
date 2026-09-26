@@ -23,6 +23,7 @@ function Dashboard() {
         gap: "16px",
       }}
     >
+      
       {/* Stat Cards Row */}
       <section className="statGrid">
         <StatCard icon={<CreditCard size={20} />} statTitle="Total Transactions" statNumber={12000} color="#A66CFF" />

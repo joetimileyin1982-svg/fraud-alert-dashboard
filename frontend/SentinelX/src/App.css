@@ -1,4 +1,72 @@
-.App {
-  height: 100vh;
+html, body, #root {
+  height: 100%;
   width: 100%;
+  margin: 0;
+}
+
+body {
+  background: #071423;
+  color: #F1F5F9;
+  font-family: "Inter", sans-serif;
+}
+
+.appShell {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Left sidebar — fixed width, full height, never scrolls with content */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  height: 100%;
+  background: #08182D;
+  border-right: 1px solid #17324D;
+  overflow-y: auto;
+}
+
+/* Everything to the right of the sidebar */
+.mainArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+/* Header — fixed height, stays pinned at top of mainArea */
+.header {
+  flex-shrink: 0;
+  padding: 16px 24px;
+  border-bottom: 1px solid #17324D;
+}
+
+/* Body row: page content + right panel, side by side */
+.pageBody {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Scrollable main content area (your Dashboard lives here) */
+.pageContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Right panel — fixed width, own scroll, independent of pageContent */
+.rightPanel {
+  width: 280px;
+  flex-shrink: 0;
+  height: 100%;
+  border-left: 1px solid #17324D;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
 }
