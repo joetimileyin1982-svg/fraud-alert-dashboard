@@ -1,0 +1,27 @@
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+  padding: 16px 0;
+}
+:root {
+  --bg: #071423;
+  --sidebar: #08182D;
+  --surface: #0D1B31;
+  --border: #17324D;
+  --text: #F1F5F9;
+  --muted: #8FA8C4;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+}
+.border-pink {
+  border-color: #FF3B81;
+  box-shadow:
+    0 0 7px rgba(255, 59, 129, 0.3),
+    0 0 20px rgba(255, 59, 129, 0.1);
+}
