@@ -3,10 +3,12 @@ import React from "react";
 function StatCard({ icon, statTitle, statNumber, color = "#A66CFF" }) {
   const titleStyle = {
     fontSize: "15px",
+    margin: 0,
   };
 
   const numberStyle = {
     fontSize: "20px",
+    margin: 0,
   };
 
   // Convert Hex (e.g. "#FF1744" or "#F00") to RGBA for consistent glowing effects
@@ -33,24 +35,27 @@ function StatCard({ icon, statTitle, statNumber, color = "#A66CFF" }) {
       0 0 8px ${hexToRgba(color, 0.55)},
       0 0 22px ${hexToRgba(color, 0.3)},
       0 0 45px ${hexToRgba(color, 0.12)}
-    `
-    ,
-      padding : "20px"
+    `,
+    padding: "20px",
+    display: "flex",
+    alignItems: "center",
+    gap: "14px",
   };
 
   return (
     <div className="statCard" style={cardStyle}>
-      <div className="statIconWrap" style={{ color: color }}>
+      <div className="statIconWrap" style={{ color: color, flexShrink: 0 }}>
         {icon}
       </div>
 
-      <p className="statTitle" style={titleStyle}>
-        {statTitle}
-      </p>
-
-      <p className="statNumber" style={numberStyle}>
-        {statNumber}
-      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+        <p className="statTitle" style={titleStyle}>
+          {statTitle}
+        </p>
+        <p className="statNumber" style={numberStyle}>
+          {statNumber}
+        </p>
+      </div>
     </div>
   );
 }

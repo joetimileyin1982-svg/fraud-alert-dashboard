@@ -3,6 +3,7 @@ import StatCard from "../../components/dashboard/StatCard";
 import TransactionTrendChart from "../../components/analytics/TransactionTrendChart";
 import RiskDistributionChart from "../../components/analytics/RiskDistributionChart";
 import TopRules from "../../components/analytics/TopRules";
+import TransactionTable from "../../components/transactions/TransactionTable";
 
 import {
   CreditCard,
@@ -14,7 +15,15 @@ import {
 
 function Dashboard() {
   return (
-    <main className="dashboardPage" style={{ padding: "24px", boxSizing: "border-box" }}>
+    <main
+      className="dashboardPage"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+      }}
+    >
+      {/* Stat Cards Row */}
       <section className="statGrid">
         <StatCard icon={<CreditCard size={20} />} statTitle="Total Transactions" statNumber={12000} color="#A66CFF" />
         <StatCard icon={<ShieldCheck size={20} />} statTitle="Resolved" statNumber={22346} color="#35F2B0" />
@@ -23,23 +32,25 @@ function Dashboard() {
         <StatCard icon={<ShieldAlert size={20} />} statTitle="Critical" statNumber={193} color="#FF1744" />
       </section>
 
-      <section className="chartSection">
-        <div
-          className="chartsRow"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr",
-            gap: "20px",
-            marginTop: "24px",
-            alignItems: "start",
-          }}
-        >
+      {/* Body: 2-column layout — left (chart + table), right (donut + rules) */}
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2.2fr 1fr",
+          gap: "16px",
+          alignItems: "start",
+        }}
+      >
+        {/* Left column */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <TransactionTrendChart />
+          <TransactionTable />
+        </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            <RiskDistributionChart/>
-            <TopRules />
-          </div>
+        {/* Right column */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <RiskDistributionChart />
+          <TopRules />
         </div>
       </section>
     </main>

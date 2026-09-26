@@ -10,12 +10,22 @@ const rulesData = [
 
 export default function TopRules() {
   return (
-    <div style={{ background: '#050b18', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', color: '#fff' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '600', color: '#fff' }}>
+    <div
+      style={{
+        background: '#050b18',
+        border: '1px solid #1e293b',
+        borderRadius: '16px',
+        padding: '20px',
+        color: '#fff',
+        height: '100%',
+        boxSizing: 'border-box',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', marginBottom: '16px' }}>
+        <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '600', color: '#fff', lineHeight: '1.3' }}>
           Top Fraud Rules Triggered
         </h3>
-        <span style={{ fontSize: '13px', color: '#00e5ff', cursor: 'pointer', fontWeight: '500' }}>
+        <span style={{ fontSize: '13px', color: '#00e5ff', cursor: 'pointer', fontWeight: '500', whiteSpace: 'nowrap', flexShrink: 0 }}>
           View all →
         </span>
       </div>

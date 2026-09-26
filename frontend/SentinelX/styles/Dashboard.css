@@ -1,9 +1,3 @@
-.statGrid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 30px;
-  padding: 16px 0;
-}
 :root {
   --bg: #071423;
   --sidebar: #08182D;
@@ -13,12 +7,37 @@
   --muted: #8FA8C4;
 }
 
-body {
+html, body, #root {
+  height: 100%;
+  width: 100%;
   margin: 0;
+}
+
+body {
   background: var(--bg);
   color: var(--text);
   font-family: "Inter", sans-serif;
 }
+
+.App {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.dashboardPage {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
 .border-pink {
   border-color: #FF3B81;
   box-shadow:

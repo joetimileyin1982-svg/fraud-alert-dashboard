@@ -1,0 +1,85 @@
+.tableCard {
+  background: #0D1B31;
+  border: 1px solid #17324D;
+  border-radius: 18px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.tableTitle {
+  margin: 0 0 14px 0;
+  flex-shrink: 0;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.tableControls {
+  display: flex;
+  gap: 12px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #081423;
+  border: 1px solid #17324D;
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.searchBox input {
+  background: none;
+  border: none;
+  color: white;
+  outline: none;
+}
+
+.tableScrollArea {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #0D1B31;
+  z-index: 1;
+}
+
+th {
+  color: #7EA0C4;
+  font-size: 12px;
+  text-align: left;
+  padding-bottom: 12px;
+}
+
+td {
+  padding: 14px 0;
+  border-top: 1px solid #13253C;
+  color: #E8F1FF;
+  font-size: 13px;
+}
+
+.pagination {
+  flex-shrink: 0;
+  padding-top: 12px;
+  font-size: 12px;
+  color: #7EA0C4;
+}
