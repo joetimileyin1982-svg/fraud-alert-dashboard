@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const data = [
@@ -13,11 +13,52 @@ const data = [
   { time: 'May 4',  Legitimate: 11000, Fraudulent: 6000 },
 ];
 
-export default function TransactionTrendChart() {
+const cardStyle = (isActive) => ({
+  background: '#050b18',
+  border: `1px solid ${isActive ? '#00e5ff' : '#1e293b'}`,
+  borderRadius: '16px',
+  padding: '20px',
+  color: '#fff',
+  cursor: 'pointer',
+  transition: 'all 0.3s ease',
+  boxShadow: isActive ? '0 0 20px rgba(0,229,255,0.35)' : 'none',
+});
+
+const tooltipStyle = {
+  background: 'rgba(7,20,35,0.85)',
+  backdropFilter: 'blur(6px)',
+  border: '1px solid #00e5ff',
+  borderRadius: '10px',
+  padding: '12px 16px',
+  boxShadow: '0 0 12px rgba(0,229,255,0.5), 0 0 24px rgba(255,0,127,0.15)',
+  minWidth: '140px',
+};
+
+function GlowTooltip({ active, payload, label }) {
+  if (!active || !payload?.length) return null;
+
   return (
-    <div style={{ background: '#050b18', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', color: '#fff' }}>
+    <div style={tooltipStyle}>
+      <p style={{ margin: '0 0 8px', color: '#00e5ff', fontWeight: 'bold', fontSize: '13px' }}>
+        {label}
+      </p>
+      {payload.map((entry) => (
+        <div key={entry.dataKey} style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', fontSize: '12px', marginBottom: '4px' }}>
+          <span style={{ color: entry.color }}>● {entry.dataKey}</span>
+          <strong style={{ color: '#fff' }}>{entry.value.toLocaleString()}</strong>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function TransactionTrendChart() {
+  const [isActive, setIsActive] = useState(false);
+
+  return (
+    <div onClick={() => setIsActive(!isActive)} style={cardStyle(isActive)}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <h3 style={{ margin: 0, fontSize: '16px', color: '#fff' }}>Fraud vs Legitimate Transactions</h3>
+        <h3 style={{ margin: 0, fontSize: '16px' }}>Fraud vs Legitimate Transactions</h3>
         <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: '#94a3b8' }}>
           <span><strong style={{ color: '#00e5ff' }}>●</strong> Legitimate</span>
           <span><strong style={{ color: '#ff007f' }}>●</strong> Fraudulent</span>
@@ -41,7 +82,7 @@ export default function TransactionTrendChart() {
             <CartesianGrid strokeDasharray="0" vertical={false} stroke="#1e293b" />
             <XAxis dataKey="time" stroke="#64748b" axisLine={false} tickLine={false} dy={10} style={{ fontSize: '12px' }} />
             <YAxis stroke="#64748b" axisLine={false} tickLine={false} tickFormatter={(v) => `${v / 1000}K`} domain={[0, 16000]} ticks={[0, 4000, 8000, 12000, 16000]} style={{ fontSize: '12px' }} />
-            <Tooltip />
+            <Tooltip cursor={{ stroke: '#00e5ff', strokeWidth: 1, strokeDasharray: '4 4' }} content={<GlowTooltip />} />
             <Area type="monotone" dataKey="Legitimate" stroke="#00e5ff" strokeWidth={2.5} fill="url(#colorLegitimate)" />
             <Area type="monotone" dataKey="Fraudulent" stroke="#ff007f" strokeWidth={2.5} fill="url(#colorFraudulent)" />
           </AreaChart>
