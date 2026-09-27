@@ -3,12 +3,12 @@ import React from "react";
 function StatCard({ icon, statTitle, statNumber, color = "#A66CFF" }) {
   const titleStyle = {
     fontSize: "15px",
-    margin: 0,
+    padding: "10px",
   };
 
   const numberStyle = {
     fontSize: "20px",
-    margin: 0,
+    padding: "10px",
   };
 
   // Convert Hex (e.g. "#FF1744" or "#F00") to RGBA for consistent glowing effects

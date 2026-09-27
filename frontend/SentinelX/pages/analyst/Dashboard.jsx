@@ -20,14 +20,14 @@ function Dashboard() {
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "16px",
+        gap: "5px",
       }}
     >
       
       {/* Stat Cards Row */}
       <section className="statGrid">
-        <StatCard icon={<CreditCard size={20} />} statTitle="Total Transactions" statNumber={12000} color="#A66CFF" />
-        <StatCard icon={<ShieldCheck size={20} />} statTitle="Resolved" statNumber={22346} color="#35F2B0" />
+        <StatCard icon={<CreditCard size={20} />} statTitle="Resolved" statNumber={12000} color="#A66CFF" />
+        <StatCard icon={<ShieldCheck size={20} />} statTitle="Safe" statNumber={22346} color="#35F2B0" />
         <StatCard icon={<AlertTriangle size={20} />} statTitle="Flagged for Review" statNumber={1942} color="#FFE14A" />
         <StatCard icon={<UserRound size={20} />} statTitle="High Risk" statNumber={412} color="#FF3B81" />
         <StatCard icon={<ShieldAlert size={20} />} statTitle="Critical" statNumber={193} color="#FF1744" />
