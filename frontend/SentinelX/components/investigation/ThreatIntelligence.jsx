@@ -13,21 +13,21 @@ export default function ThreatIntelligence() {
     <div className="threatIntelligence">
       <div className="threatHeadingRow">
         <h3 className="threatMainTitle">Threat Intelligence</h3>
-        <div className="threatHeadingSubRow">
-          <button disabled className="liveBtn">LIVE</button>
-          <Link to="/analyst/investigation" className="viewAllLink">
-            <span>View all</span>
-            <ArrowRight size={14} className="arrowIcon" />
-          </Link>
-        </div>
+        <Link to="/analyst/investigation" className="viewAllLink">
+          <span>View all</span>
+          <ArrowRight size={13} />
+        </Link>
       </div>
+      <button disabled className="liveBtn">LIVE</button>
 
-      <div className="threatList">
-        {alertsData.map((threat) => (
-          <div key={threat.id} className="threatLink" onClick={() => setSelectedThreat(threat)}>
-            <ThreatItem {...threat} />
-          </div>
-        ))}
+      <div className="threatPanel">
+        <div className="threatList">
+          {alertsData.map((threat) => (
+            <div key={threat.id} className="threatLink" onClick={() => setSelectedThreat(threat)}>
+              <ThreatItem {...threat} />
+            </div>
+          ))}
+        </div>
       </div>
 
       <ThreatDrawer threat={selectedThreat} onClose={() => setSelectedThreat(null)} />

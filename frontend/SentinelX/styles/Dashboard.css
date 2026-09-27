@@ -24,12 +24,35 @@ body {
   width: 100%;
 }
 
-.dashboardPage {
-  width: 100%;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
+.dashboardPage{
+  width:100%;
+  min-height:100vh;
+  padding:24px;
+  box-sizing:border-box;
+
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+
+  background:var(--bg);
+}
+
+.statGrid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(180px,1fr));
+  gap:18px;
+}
+
+@media (max-width:1300px){
+  .statGrid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media (max-width:900px){
+  .statGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 .statGrid {
   display: grid;

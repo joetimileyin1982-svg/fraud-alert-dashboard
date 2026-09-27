@@ -1,11 +1,25 @@
+
+
 .sidebar {
   display: flex;
   flex-direction: column;
-  padding: 20px 16px;
+  padding: 20px 12px; 
   box-sizing: border-box;
   height: 100%;
 }
 
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  padding: 10px 10px;
+  border-radius: 10px;
+  color: #7ea0c4;
+  font-size: 13px; 
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
 .sidebarLogo {
   display: flex;
   align-items: center;
@@ -34,17 +48,7 @@
   flex: 1;
 }
 
-.navItem {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: #7ea0c4;
-  font-size: 14px;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 
 .navItem:hover {
   background: #0d1b2a;

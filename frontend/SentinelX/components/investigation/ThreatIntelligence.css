@@ -2,27 +2,39 @@
   background: #050b18;
   border: 1px solid #1e293b;
   border-radius: 16px;
-  padding: 20px;
+  padding: 18px;
   color: #fff;
 }
 
 .threatHeadingRow {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 18px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
 .threatMainTitle {
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
-.threatHeadingSubRow {
+.viewAllLink {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #00e5ff;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.viewAllLink:hover {
+  text-decoration: underline;
 }
 
 .liveBtn {
@@ -35,7 +47,8 @@
   border-radius: 999px;
   letter-spacing: 0.5px;
   cursor: default;
-  flex-shrink: 0;
+  margin-bottom: 14px;
+  display: inline-block;
 }
 
 .liveBtn::before {
@@ -56,31 +69,30 @@
   100% { opacity: 1; }
 }
 
-.viewAllLink {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: #00e5ff;
-  text-decoration: none;
-  font-weight: 500;
-  white-space: nowrap;
-  flex-shrink: 0;
+.threatPanel {
+  height: 520px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
-.viewAllLink:hover {
-  text-decoration: underline;
+.threatPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.threatPanel::-webkit-scrollbar-thumb {
+  background: #17324D;
+  border-radius: 20px;
 }
 
 .threatList {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
 }
 
 .threatLink {
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: background 0.2s ease;
 }
 
@@ -89,61 +101,52 @@
 }
 
 .threatItem {
+  padding: 10px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.threatTopRow {
   display: flex;
-  gap: 12px;
   align-items: flex-start;
-  padding: 8px;
-}
-
-.threatIconWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  flex-shrink: 0;
-}
-
-.threatContent {
-  flex: 1;
-  min-width: 0;
-}
-
-.threatTitleRow {
-  display: flex;
-  align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  flex-wrap: wrap;
   margin-bottom: 4px;
 }
 
 .threatTitle {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
+  line-height: 1.3;
+  flex: 1;
+  min-width: 0;
+}
+
+.severityBadge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.threatMetaRow {
+  margin-bottom: 5px;
 }
 
 .threatTime {
-  margin-left: auto;
   font-size: 11px;
   color: #64748b;
-  white-space: nowrap;
 }
 
 .threatDescription {
   margin: 0;
   font-size: 12px;
   color: #94a3b8;
-  line-height: 1.4;
-}
-
-.severityBadge {
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  line-height: 1.45;
+  text-align: left;
 }
 
 .severityBadge.critical {

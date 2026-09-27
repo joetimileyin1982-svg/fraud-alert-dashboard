@@ -5,12 +5,11 @@ import RiskDistributionChart from "../../components/analytics/RiskDistributionCh
 import TopRules from "../../components/analytics/TopRules";
 import TransactionTable from "../../components/transactions/TransactionTable";
 
-import {
-  CreditCard,
-  ShieldAlert,
+ import {CircleCheckBig,
   ShieldCheck,
-  UserRound,
-  AlertTriangle,
+  TriangleAlert,
+  Flame,
+  Siren,
 } from "lucide-react";
 
 function Dashboard() {
@@ -18,13 +17,14 @@ function Dashboard() {
     <main className="dashboardPage" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
 
       {/* Stat Cards Row */}
-      <section className="statGrid">
-        <StatCard icon={<CreditCard size={20} />} statTitle="Resolved" statNumber={12000} color="#A66CFF" />
+   <section className="statGrid">
+        <StatCard icon={<CircleCheckBig size={20} />} statTitle="Resolved" statNumber={12000} color="#A66CFF" />
         <StatCard icon={<ShieldCheck size={20} />} statTitle="Safe" statNumber={22346} color="#35F2B0" />
-        <StatCard icon={<AlertTriangle size={20} />} statTitle="Suspicious" statNumber={1942} color="#FFE14A" />
-        <StatCard icon={<UserRound size={20} />} statTitle="High Risk" statNumber={412} color="#FF3B81" />
-        <StatCard icon={<ShieldAlert size={20} />} statTitle="Critical" statNumber={193} color="#FF1744" />
+        <StatCard icon={<TriangleAlert size={20} />} statTitle="Suspicious" statNumber={1942} color="#FFE14A" />
+        <StatCard icon={<Flame size={20} />} statTitle="High Risk" statNumber={412} color="#FF6B00" />
+        <StatCard icon={<Siren size={20} />} statTitle="Critical" statNumber={193} color="#B00020" />
       </section>
+
 
       {/* Trend Chart — its own full-width row */}
       <section>
