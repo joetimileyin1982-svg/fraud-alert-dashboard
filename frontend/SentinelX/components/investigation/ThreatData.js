@@ -1,0 +1,77 @@
+import { AlertOctagon, AlertTriangle, ShieldAlert, Cpu, CheckCircle } from "lucide-react";
+
+export const threatData = [
+  {
+    id: "th-1",
+    title: "Critical Fraud Alert",
+    description: "Multiple high-value transactions from new device (SIM swap suspected)",
+    severity: "Critical",
+    time: "08:42 AM",
+    icon: AlertOctagon,
+    color: "#ff1744",
+    rule: "Velocity Check",
+    transaction: {
+      customer: "Bob Square",
+      amount: "₦450,000",
+      merchant: "Krusty Mart",
+      location: "Lagos, NG",
+      risk: 92,
+    },
+  },
+  {
+    id: "th-2",
+    title: "High Risk Transaction",
+    description: "Unusual location (foreign country) + high amount",
+    severity: "High",
+    time: "07:15 AM",
+    icon: AlertTriangle,
+    color: "#ff007f",
+    rule: "High Risk Location",
+    transaction: {
+      customer: "Patty Star",
+      amount: "₦450,000",
+      merchant: "JellyPay",
+      location: "Starfish Shore",
+      risk: 60,
+    },
+  },
+  {
+    id: "th-3",
+    title: "Suspicious Activity",
+    description: "Velocity check triggered (8 txns in 5 min)",
+    severity: "Warning",
+    time: "06:27 AM",
+    icon: ShieldAlert,
+    color: "#ffb300",
+    rule: "Velocity Check",
+    transaction: {
+      customer: "Gary Shell",
+      amount: "₦70,000",
+      merchant: "Bikini Transfer",
+      location: "Bubble Bay",
+      risk: 80,
+    },
+  },
+  {
+    id: "th-4",
+    title: "Device Anomaly",
+    description: "New device fingerprint detected",
+    severity: "Warning",
+    time: "04:12 AM",
+    icon: Cpu,
+    color: "#ffb300",
+    rule: "Device Mismatch",
+    // no transaction — this alert isn't tied to a specific one
+  },
+  {
+    id: "th-5",
+    title: "False Positive Resolved",
+    description: "Previously flagged transaction reviewed and cleared",
+    severity: "Info",
+    time: "02:36 AM",
+    icon: CheckCircle,
+    color: "#00e5ff",
+    rule: "Amount Threshold",
+    // no transaction — resolved, no active record needed
+  },
+];

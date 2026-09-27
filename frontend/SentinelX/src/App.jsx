@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "../components/layout/SideBar";
 import TopBar from "../components/layout/TopBar";
+import RightPanel from "../components/layout/RightPanel";
 import "./App.css";
 
 // Analyst pages
@@ -29,11 +30,12 @@ function App() {
                 <Route path="/analyst/investigation" element={<Investigation />} />
                 <Route path="/analyst/risk-analytics" element={<RiskAnalytics />} />
                 <Route path="/analyst/notifications" element={<Notifications />} />
-                
 
                 <Route path="*" element={<Navigate to="/analyst/dashboard" replace />} />
               </Routes>
             </div>
+
+            <RightPanel />
           </div>
         </div>
       </div>

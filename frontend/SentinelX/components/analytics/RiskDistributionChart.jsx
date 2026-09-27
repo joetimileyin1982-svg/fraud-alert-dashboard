@@ -11,10 +11,10 @@ export default function RiskDistributionChart() {
   return (
     <div style={{ background: "#050b18", border: "1px solid #1e293b", borderRadius: "16px", padding: "20px", color: "#fff" }}>
       <h3 style={{ margin: "0 0 16px 0", fontSize: "16px" }}>Risk Distribution</h3>
-      
-      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
         {/* Donut Chart */}
-        <div style={{ width: 140, height: 140, position: "relative" }}>
+        <div style={{ width: 140, height: 140, position: "relative", flexShrink: 0 }}>
           <ResponsiveContainer>
             <PieChart>
               <Pie data={data} innerRadius={48} outerRadius={65} paddingAngle={3} dataKey="value" stroke="none">
@@ -24,8 +24,7 @@ export default function RiskDistributionChart() {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          
-          {/* Center Text */}
+
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center" }}>
             <div style={{ fontSize: "18px", fontWeight: "bold" }}>1,942</div>
             <div style={{ fontSize: "11px", color: "#64748b" }}>Flagged</div>
@@ -33,7 +32,7 @@ export default function RiskDistributionChart() {
         </div>
 
         {/* Legend */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", fontSize: "13px" }}>
           {data.map((item) => (
             <div key={item.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ display: "flex", alignItems: "center", gap: "8px", color: "#94a3b8" }}>

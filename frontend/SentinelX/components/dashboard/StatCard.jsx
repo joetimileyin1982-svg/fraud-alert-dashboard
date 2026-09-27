@@ -1,17 +1,6 @@
 import React from "react";
 
 function StatCard({ icon, statTitle, statNumber, color = "#A66CFF" }) {
-  const titleStyle = {
-    fontSize: "15px",
-    padding: "10px",
-  };
-
-  const numberStyle = {
-    fontSize: "20px",
-    padding: "10px",
-  };
-
-  // Convert Hex (e.g. "#FF1744" or "#F00") to RGBA for consistent glowing effects
   const hexToRgba = (hex, alpha) => {
     let cleanHex = hex.replace("#", "");
     if (cleanHex.length === 3) {
@@ -24,35 +13,31 @@ function StatCard({ icon, statTitle, statNumber, color = "#A66CFF" }) {
   };
 
   const cardStyle = {
-    background: `linear-gradient(
-      135deg,
-      ${hexToRgba(color, 0.32)},
-      ${hexToRgba(color, 0.1)}
-    )`,
+    background: `linear-gradient(135deg, ${hexToRgba(color, 0.32)}, ${hexToRgba(color, 0.1)})`,
     border: `1px solid ${hexToRgba(color, 0.85)}`,
     boxShadow: `
       inset 0 0 20px ${hexToRgba(color, 0.1)},
       0 0 8px ${hexToRgba(color, 0.55)},
-      0 0 22px ${hexToRgba(color, 0.3)},
-      0 0 45px ${hexToRgba(color, 0.12)}
+      0 0 22px ${hexToRgba(color, 0.3)}
     `,
-    padding: "20px",
+    padding: "12px 14px",
+    borderRadius: "14px",
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
-    gap: "14px",
+    textAlign: "center",
+    gap: "8px",
   };
 
   return (
     <div className="statCard" style={cardStyle}>
-      <div className="statIconWrap" style={{ color: color, flexShrink: 0 }}>
-        {icon}
-      </div>
+      <div style={{ color, flexShrink: 0, display: "flex" }}>{icon}</div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        <p className="statTitle" style={titleStyle}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "2px", alignItems: "center" }}>
+        <p style={{ margin: 0, fontSize: "12px", color: "#B8C7DA", fontWeight: 600 }}>
           {statTitle}
         </p>
-        <p className="statNumber" style={numberStyle}>
+        <p style={{ margin: 0, fontSize: "19px", color: "#fff", fontWeight: 700, lineHeight: 1.2 }}>
           {statNumber}
         </p>
       </div>

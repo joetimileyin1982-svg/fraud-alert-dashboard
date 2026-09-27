@@ -15,45 +15,33 @@ import {
 
 function Dashboard() {
   return (
-    <main
-      className="dashboardPage"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "5px",
-      }}
-    >
-      
+    <main className="dashboardPage" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+
       {/* Stat Cards Row */}
       <section className="statGrid">
         <StatCard icon={<CreditCard size={20} />} statTitle="Resolved" statNumber={12000} color="#A66CFF" />
         <StatCard icon={<ShieldCheck size={20} />} statTitle="Safe" statNumber={22346} color="#35F2B0" />
-        <StatCard icon={<AlertTriangle size={20} />} statTitle="Flagged for Review" statNumber={1942} color="#FFE14A" />
+        <StatCard icon={<AlertTriangle size={20} />} statTitle="Suspicious" statNumber={1942} color="#FFE14A" />
         <StatCard icon={<UserRound size={20} />} statTitle="High Risk" statNumber={412} color="#FF3B81" />
         <StatCard icon={<ShieldAlert size={20} />} statTitle="Critical" statNumber={193} color="#FF1744" />
       </section>
 
-      {/* Body: 2-column layout — left (chart + table), right (donut + rules) */}
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "2.2fr 1fr",
-          gap: "16px",
-          alignItems: "start",
-        }}
-      >
-        {/* Left column */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <TransactionTrendChart />
-          <TransactionTable />
-        </div>
-
-        {/* Right column */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <RiskDistributionChart />
-          <TopRules />
-        </div>
+      {/* Trend Chart — its own full-width row */}
+      <section>
+        <TransactionTrendChart />
       </section>
+
+      {/* Risk Distribution + Top Rules — together, side by side */}
+      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", alignItems: "start" }}>
+        <RiskDistributionChart />
+        <TopRules />
+      </section>
+
+      {/* Table — its own full-width row */}
+      <section>
+        <TransactionTable />
+      </section>
+
     </main>
   );
 }

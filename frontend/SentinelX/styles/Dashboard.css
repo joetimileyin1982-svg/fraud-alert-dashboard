@@ -31,12 +31,11 @@ body {
   box-sizing: border-box;
   overflow-y: auto;
 }
-
 .statGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 25px;
-  text-align: center;
-  font-weight: bolder;
+  gap: 16px;
 }
+  
+
 
