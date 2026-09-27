@@ -1,6 +1,6 @@
 import { AlertOctagon, AlertTriangle, ShieldAlert, Cpu, CheckCircle } from "lucide-react";
 
-export const threatData = [
+export const alertsData = [
   {
     id: "th-1",
     title: "Critical Fraud Alert",
@@ -61,7 +61,6 @@ export const threatData = [
     icon: Cpu,
     color: "#ffb300",
     rule: "Device Mismatch",
-    // no transaction — this alert isn't tied to a specific one
   },
   {
     id: "th-5",
@@ -72,6 +71,5 @@ export const threatData = [
     icon: CheckCircle,
     color: "#00e5ff",
     rule: "Amount Threshold",
-    // no transaction — resolved, no active record needed
   },
 ];
