@@ -1,0 +1,475 @@
+/* ============================================================
+   Risk Analytics Page
+   ============================================================ */
+
+.ra-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13.5px;
+}
+
+/* ============ Header ============ */
+.ra-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ra-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+.ra-header p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+.ra-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ra-select {
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 7px 12px;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+.ra-select:focus { border-color: #22d3ee; }
+
+.ra-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.ra-btn {
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ra-btn:hover { border-color: #22d3ee; color: #22d3ee; }
+
+/* ============ Cards ============ */
+.ra-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  min-width: 0;
+}
+
+.ra-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ra-card-head h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+.ra-card-action {
+  font-size: 12px;
+  color: #22d3ee;
+  cursor: pointer;
+}
+
+/* ============ KPI grid ============ */
+.ra-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ra-kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.ra-kpi-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ra-kpi.purple   .ra-kpi-icon { background: rgba(168,85,247,0.15); color: #a855f7; }
+.ra-kpi.green    .ra-kpi-icon { background: rgba(52,211,153,0.15); color: #34d399; }
+.ra-kpi.amber    .ra-kpi-icon { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.ra-kpi.critical .ra-kpi-icon { background: rgba(239,68,68,0.15);  color: #ef4444; }
+
+.ra-kpi-body { flex: 1; min-width: 0; }
+.ra-kpi-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.ra-kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+.ra-kpi.purple   .ra-kpi-value { color: #a855f7; }
+.ra-kpi.green    .ra-kpi-value { color: #34d399; }
+.ra-kpi.amber    .ra-kpi-value { color: #fbbf24; }
+.ra-kpi.critical .ra-kpi-value { color: #ef4444; }
+
+.ra-kpi-delta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.ra-kpi-delta.up   { color: #34d399; }
+.ra-kpi-delta.down { color: #ef4444; }
+.ra-kpi-delta-label {
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* ============ Two-column rows ============ */
+.ra-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* ============ Charts ============ */
+.ra-chart { width: 100%; }
+
+/* ============ Trend legend ============ */
+.ra-legend-inline {
+  display: flex;
+  gap: 12px;
+  font-size: 11.5px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.ra-legend-inline span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ra-legend-inline i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ============ Risk distribution ============ */
+.ra-dist {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ra-dist-chart {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.ra-dist-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.ra-dist-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ra-dist-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+.ra-dist-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.ra-dist-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.ra-dist-legend .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ra-dist-legend strong {
+  margin-left: auto;
+  color: var(--text);
+}
+
+/* ============ Table ============ */
+.ra-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ra-table thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 6px 8px 10px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.ra-table th.num,
+.ra-table td.num { text-align: right; }
+.ra-table tbody td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.ra-table tbody tr:last-child td { border-bottom: none; }
+.ra-clickable { cursor: pointer; transition: background 0.15s; }
+.ra-clickable:hover { background: rgba(34,211,238,0.05); }
+
+/* ============ Pills ============ */
+.ra-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.ra-pill.critical {
+  color: #ef4444;
+  background: rgba(239,68,68,0.10);
+  border-color: rgba(239,68,68,0.40);
+}
+.ra-pill.amber {
+  color: #fbbf24;
+  background: rgba(251,191,36,0.10);
+  border-color: rgba(251,191,36,0.35);
+}
+
+/* ============ Customers mini table ============ */
+.ra-cust {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ra-cust-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #164e63, #4c1d95);
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.ra-cust-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.ra-cust-id {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.ra-cust-action { text-align: right; }
+.ra-view-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ra-view-btn:hover {
+  color: #22d3ee;
+  border-color: #22d3ee;
+  background: rgba(34,211,238,0.06);
+}
+
+/* ============ Device risk ============ */
+.ra-device-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.ra-device-card {
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.ra-device-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.ra-device-label .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.ra-device-card.trusted    .dot { background: #34d399; }
+.ra-device-card.new        .dot { background: #fbbf24; }
+.ra-device-card.suspicious .dot { background: #f472b6; }
+.ra-device-card.high       .dot { background: #ef4444; box-shadow: 0 0 6px rgba(239,68,68,0.6); }
+
+.ra-device-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ra-device-card.trusted    .ra-device-value { color: #34d399; }
+.ra-device-card.new        .ra-device-value { color: #fbbf24; }
+.ra-device-card.suspicious .ra-device-value { color: #f472b6; }
+.ra-device-card.high       .ra-device-value { color: #ef4444; }
+
+.ra-device-chart { width: 100%; }
+
+/* ============ Merchant avatars ============ */
+.ra-merchant {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ra-merchant-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #164e63, #4c1d95);
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* ============ Emerging signals ============ */
+.ra-signal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ra-signal-list-wide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ra-signal {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-width: 0;
+}
+.ra-signal-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ra-signal.high    .ra-signal-icon { background: rgba(239,68,68,0.15); color: #ef4444; }
+.ra-signal.warning .ra-signal-icon { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.ra-signal.low     .ra-signal-icon { background: rgba(52,211,153,0.15); color: #34d399; }
+
+.ra-signal-body { flex: 1; min-width: 0; }
+.ra-signal-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+.ra-signal-sub {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.ra-signal-time {
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 1100px) {
+  .ra-kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .ra-row-2   { grid-template-columns: 1fr; }
+  .ra-signal-list-wide { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .ra-kpi-row { grid-template-columns: 1fr; }
+  .ra-device-cards { grid-template-columns: 1fr; }
+  .ra-dist { flex-direction: column; }
+}
