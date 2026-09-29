@@ -1,36 +1,15 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search, X, ChevronRight, UserX } from "lucide-react";
 import { customers } from "../../src/data/customers";
 import { transactions } from "../../src/data/transactions";
 import { computeRiskScore, riskBucket, riskLabel } from "../../src/data/FraudRules";
-import CustomerRiskProfile from "../../components/customers/CustomersRiskProfile";
+import { formatCurrency } from "../../src/utils/format";
+import CustomerRiskProfile from "../../components/customers/CustomersRiskProfile"
 import "../../styles/Customers.css";
 
 const RISK_FILTERS = ["All", "Safe", "Suspicious", "High Risk", "Critical"];
 
-const initials = (name) =>
-  name.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase();
-
-const formatCurrency = (n) =>
-  new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    maximumFractionDigits: 0,
-  }).format(n);
-
-const formatRelative = (iso) => {
-  const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
-  if (mins < 60) return `${mins}m ago`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
-  return `${Math.floor(hrs / 24)}d ago`;
-};
-
-/**
- * Derive a customer's risk score from their transactions.
- * Uses the highest-scoring transaction as the customer's risk.
- */
 function deriveCustomerRisk(customer) {
   const theirTxns = transactions.filter((t) => t.customer === customer.name);
   const scores = theirTxns.map((t) => computeRiskScore(t.rules));
@@ -44,7 +23,9 @@ function deriveCustomerRisk(customer) {
 
 export default function Customers() {
   const navigate = useNavigate();
-  const [query, setQuery] = useState("");
+  const [searchParams] = useSearchParams();
+
+  const [query, setQuery] = useState(searchParams.get("search") || "");
   const [riskFilter, setRiskFilter] = useState("All");
   const [selected, setSelected] = useState(null);
 
@@ -117,7 +98,6 @@ export default function Customers() {
               <th className="num">Score</th>
               <th className="num">Transactions</th>
               <th className="num">Total Value</th>
-              <th>Last Activity</th>
               <th>Status</th>
               <th />
             </tr>
@@ -126,13 +106,8 @@ export default function Customers() {
             {filtered.map((c) => (
               <tr key={c.id} onClick={() => setSelected(c)}>
                 <td>
-                  <div className="cx-cell">
-                    <div className="cx-avatar">{initials(c.name)}</div>
-                    <div>
-                      <div className="cx-name">{c.name}</div>
-                      <div className="cx-id mono">{c.id}</div>
-                    </div>
-                  </div>
+                  <div className="cx-name">{c.name}</div>
+                  <div className="cx-id">{c.id}</div>
                 </td>
                 <td>
                   <span className={`cx-badge ${c.bucket}`}>{c.label}</span>
@@ -142,7 +117,6 @@ export default function Customers() {
                 </td>
                 <td className="num">{c.totalTransactions.toLocaleString()}</td>
                 <td className="num">{formatCurrency(c.totalValue)}</td>
-                <td className="muted">{formatRelative(c.lastActivity)}</td>
                 <td>
                   <span
                     className={`cx-badge status-${c.accountStatus.toLowerCase()}`}
@@ -158,7 +132,7 @@ export default function Customers() {
 
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={8} className="cx-empty">
+                <td colSpan={7} className="cx-empty">
                   <UserX size={26} />
                   <span>No customers match your filters.</span>
                 </td>

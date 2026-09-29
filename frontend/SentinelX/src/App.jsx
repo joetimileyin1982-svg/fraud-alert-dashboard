@@ -28,10 +28,21 @@ function App() {
               <Routes>
                 <Route path="/analyst/dashboard" element={<AnalystDashboard />} />
                 <Route path="/analyst/transactions" element={<Transactions />} />
-                <Route path="/analyst/investigation" element={<Investigation />} />
+
+                {/* Plural — matches the drawers' navigation */}
+                <Route path="/analyst/investigations" element={<Investigation />} />
+                <Route path="/analyst/investigations/new" element={<Investigation />} />
+                <Route path="/analyst/investigations/:id" element={<Investigation />} />
+
                 <Route path="/analyst/customers" element={<Customers />} />
                 <Route path="/analyst/risk-analytics" element={<RiskAnalytics />} />
                 <Route path="/analyst/notifications" element={<Notifications />} />
+
+                {/* Redirect legacy singular link to plural */}
+                <Route
+                  path="/analyst/investigation"
+                  element={<Navigate to="/analyst/investigations" replace />}
+                />
 
                 <Route path="*" element={<Navigate to="/analyst/dashboard" replace />} />
               </Routes>

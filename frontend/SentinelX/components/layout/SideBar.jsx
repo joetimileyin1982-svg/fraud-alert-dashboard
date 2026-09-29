@@ -14,15 +14,17 @@ import "./SideBar.css";
 
 const currentUser = { role: "analyst" }; // temporary, until real auth exists
 
-const analystNav = [
-  { label: "Dashboard", path: "/analyst/dashboard", icon: LayoutDashboard },
-  { label: "Transactions", path: "/analyst/transactions", icon: Receipt },
-  { label: "Investigation", path: "/analyst/investigation", icon: Search },
-  { label: "Customers", path: "/analyst/customers", icon: Users },
-  { label: "Risk Analytics", path: "/analyst/risk-analytics", icon: ShieldAlert },
-  { label: "Notifications", path: "/analyst/notifications", icon: Bell, badge: 3 },
-  { label: "Reports", path: "/analyst/reports", icon: FileText },
+
+ const analystNav = [
+  { label: "Dashboard",       path: "/analyst/dashboard",       icon: LayoutDashboard },
+  { label: "Transactions",    path: "/analyst/transactions",    icon: Receipt },
+  { label: "Investigation",   path: "/analyst/investigations",  icon: Search },
+  { label: "Customers",       path: "/analyst/customers",       icon: Users },
+  { label: "Risk Analytics",  path: "/analyst/risk-analytics",  icon: ShieldAlert },
+  { label: "Notifications",   path: "/analyst/notifications",   icon: Bell, badge: 3 },
+  { label: "Reports",         path: "/analyst/reports",         icon: FileText },
 ];
+
 
 const adminNav = [
   { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },

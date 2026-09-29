@@ -4,6 +4,7 @@ import { Search, SlidersHorizontal } from "lucide-react";
 import TransactionDrawer from "./TransactionDrawer";
 import { transactions } from "../../src/data/transactions";
 import { computeRiskScore } from "../../src/data/FraudRules";
+import { formatCurrency } from "../../src/utils/format";
 import "./TransactionTable.css";
 
 const riskBucket = (r) => {
@@ -19,6 +20,22 @@ const statusLabel = (r) => {
   if (r >= 25) return "Suspicious";
   return "Safe";
 };
+
+function formatTime(iso) {
+  return new Date(iso).toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 export default function TransactionTable() {
   const navigate = useNavigate();
@@ -72,9 +89,18 @@ export default function TransactionTable() {
                     className="clickableRow"
                     onClick={() => setSelected({ ...item, risk, status })}
                   >
-                    <td>{item.time}</td>
+                    <td>
+                      <div className="txTimeCell">
+                        <span className="txTimeMain">
+                          {formatTime(item.timestamp)}
+                        </span>
+                        <span className="txTimeDate">
+                          {formatDate(item.timestamp)}
+                        </span>
+                      </div>
+                    </td>
                     <td>{item.customer}</td>
-                    <td>{item.amount}</td>
+                    <td>{formatCurrency(item.amount)}</td>
                     <td>{item.merchant}</td>
                     <td>{item.location}</td>
                     <td>
@@ -125,7 +151,7 @@ export default function TransactionTable() {
           }
           onOpenInvestigation={(t) =>
             navigate(
-              `/analyst/investigations/new?txn=${encodeURIComponent(t.customer)}`
+              `/analyst/investigations/new?txn=${encodeURIComponent(t.id)}`
             )
           }
         />

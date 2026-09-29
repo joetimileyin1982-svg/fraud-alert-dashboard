@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import {
   ShieldAlert,
   Search,
@@ -14,16 +19,28 @@ import {
   TrendingUp,
   Send,
   MessageSquare,
+  FileText,
 } from "lucide-react";
-import { alertsData } from "../../components/investigation/AlertsData";
+import { alertsData } from "../../src/data/AlertsData";
+import { formatCurrency } from "../../src/utils/format";
 import "../../styles/Investigation.css";
 
 export default function Investigation() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+
+  const incomingTxn = searchParams.get("txn");
+  const incomingAlert = searchParams.get("alert");
+  const incomingCust = searchParams.get("customer");
 
   const initialCaseId =
-    location.state?.selectedThreatId || alertsData[0]?.id;
+    id ||
+    incomingAlert ||
+    incomingTxn ||
+    incomingCust ||
+    alertsData[0]?.id;
 
   const [selectedCaseId, setSelectedCaseId] = useState(initialCaseId);
   const [searchQuery, setSearchQuery] = useState("");
@@ -45,16 +62,17 @@ export default function Investigation() {
     },
   ]);
 
-  // Sync selected case if navigation passes a different one
+  // Sync selected case when URL changes
   useEffect(() => {
-    const incoming = location.state?.selectedThreatId;
-    if (incoming && incoming !== selectedCaseId) {
-      setSelectedCaseId(incoming);
+    const next =
+      id || incomingAlert || incomingTxn || incomingCust;
+    if (next && next !== selectedCaseId) {
+      setSelectedCaseId(next);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.state]);
+  }, [id, incomingAlert, incomingTxn, incomingCust]);
 
-  // Esc key goes back
+  // Esc key navigates back
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") navigate(-1);
@@ -63,7 +81,7 @@ export default function Investigation() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate]);
 
-  // Early return if no data
+  // Empty state if no data
   if (!alertsData || alertsData.length === 0) {
     return (
       <div className="investigationContainer">
@@ -84,7 +102,6 @@ export default function Investigation() {
       minute: "2-digit",
     });
 
-  // Add a note to the activity log
   const handleAddNote = (e) => {
     e.preventDefault();
     if (!notes.trim()) return;
@@ -100,7 +117,6 @@ export default function Investigation() {
     setNotes("");
   };
 
-  // Case-level actions
   const handleAction = (action) => {
     setActivityLog((prev) => [
       ...prev,
@@ -114,7 +130,6 @@ export default function Investigation() {
     setActiveTab("notes");
   };
 
-  // Filter queue (case-insensitive status match)
   const filteredQueue = alertsData.filter((item) => {
     const q = searchQuery.toLowerCase();
     const matchesSearch =
@@ -131,7 +146,7 @@ export default function Investigation() {
 
   return (
     <div className="investigationContainer">
-      {/* Top Bar */}
+      {/* ============ Top Bar ============ */}
       <header className="investigationHeader">
         <div className="headerLeft">
           <button className="backBtn" onClick={() => navigate(-1)}>
@@ -140,7 +155,7 @@ export default function Investigation() {
           </button>
           <div className="headerTitleGroup">
             <h1 className="pageTitle">Fraud Case Investigation</h1>
-            <span className="caseIdTag">
+            <span className="caseIdTag mono">
               ID: {activeCase?.id?.toUpperCase()}
             </span>
           </div>
@@ -168,9 +183,9 @@ export default function Investigation() {
         </div>
       </header>
 
-      {/* Main 2-Column Layout */}
+      {/* ============ Main 2-column layout ============ */}
       <div className="investigationGrid">
-        {/* LEFT COLUMN: Queue List */}
+        {/* LEFT: Queue */}
         <aside className="queueSidebar">
           <div className="queueSearchBox">
             <Search size={13} className="searchIcon" />
@@ -227,16 +242,16 @@ export default function Investigation() {
           </div>
         </aside>
 
-        {/* RIGHT MAIN WORKSPACE */}
+        {/* RIGHT: Workspace */}
         <main className="caseDetailPanel">
-          {/* 1. Risk Overview Header */}
+          {/* 1. Risk Overview */}
           <section className="riskSummaryCard">
             <div className="riskScoreGauge">
               <div
                 className="scoreCircle"
-                style={{ borderColor: activeCase?.color || "#ff1744" }}
+                style={{ borderColor: activeCase?.color || "#ef4444" }}
               >
-                <span className="scoreVal">
+                <span className="scoreVal mono">
                   {activeCase?.transaction?.risk || 82}
                 </span>
                 <span className="scoreLbl">Risk Index</span>
@@ -258,14 +273,13 @@ export default function Investigation() {
                   {activeCase?.rule || "High Risk"}
                 </span>
                 <span className="pill">
-                  <Cpu size={12} /> Type:{" "}
-                  {activeCase?.type || "Transaction"}
+                  <Cpu size={12} /> Type: {activeCase?.type || "Transaction"}
                 </span>
               </div>
             </div>
           </section>
 
-          {/* 2. Entity Details Grid */}
+          {/* 2. Entity details */}
           <section className="detailsGrid">
             <div className="infoCard">
               <div className="cardHeader">
@@ -300,8 +314,10 @@ export default function Investigation() {
               <div className="infoRows">
                 <div className="infoRow">
                   <span>Amount:</span>{" "}
-                  <strong className="highlightAmount">
-                    {activeCase?.transaction?.amount || "₦450,000"}
+                  <strong className="highlightAmount mono">
+                    {typeof activeCase?.transaction?.amount === "number"
+                      ? formatCurrency(activeCase.transaction.amount)
+                      : activeCase?.transaction?.amount || "₦450,000"}
                   </strong>
                 </div>
                 <div className="infoRow">
@@ -317,7 +333,7 @@ export default function Investigation() {
             </div>
           </section>
 
-          {/* 3. Tabbed Workspace */}
+          {/* 3. Tabbed workspace */}
           <section className="workspaceTabCard">
             <div className="tabHeader">
               <button
@@ -366,7 +382,10 @@ export default function Investigation() {
                       <span className="time">08:42 AM</span>
                       <p>
                         High-value fund transfer initiated (
-                        {activeCase?.transaction?.amount || "₦450,000"})
+                        {typeof activeCase?.transaction?.amount === "number"
+                          ? formatCurrency(activeCase.transaction.amount)
+                          : activeCase?.transaction?.amount || "₦450,000"}
+                        )
                       </p>
                     </div>
                   </div>
@@ -378,7 +397,7 @@ export default function Investigation() {
                       <div key={log.id} className="logEntry">
                         <div className="logMeta">
                           <span className="author">{log.author}</span>
-                          <span className="time">{log.time}</span>
+                          <span className="time mono">{log.time}</span>
                         </div>
                         <p className="logText">{log.text}</p>
                       </div>

@@ -1,31 +1,33 @@
-/* ============ Card ============ */
+/* ============================================================
+   Transaction Table (Dashboard Card)
+   ============================================================ */
+
 .card {
-  background: #0D1B31;
-  border: 1px solid #17324D;
-  border-radius: 18px;
-  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  overflow-x: hidden;
-  color: #E8F1FF;
+  color: var(--text);
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .cardTitle {
-  margin: 0 0 14px 0;
+  margin: 0 0 12px 0;
   flex-shrink: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  color: #E8F1FF;
+  color: var(--text);
 }
 
 /* ============ Controls ============ */
 .cardControls {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 10px;
+  margin-bottom: 12px;
   flex-shrink: 0;
   flex-wrap: wrap;
 }
@@ -34,13 +36,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #081423;
-  border: 1px solid #17324D;
+  background: var(--sidebar);
+  border: 1px solid var(--border);
   padding: 8px 12px;
-  border-radius: 12px;
-  color: #7EA0C4;
+  border-radius: 10px;
+  color: var(--muted);
   flex: 1;
-  max-width: 320px;
+  max-width: 300px;
   min-width: 180px;
 }
 .searchBox:focus-within {
@@ -49,7 +51,7 @@
 .searchBox input {
   background: none;
   border: none;
-  color: #E8F1FF;
+  color: var(--text);
   outline: none;
   font-size: 13px;
   font-family: inherit;
@@ -60,10 +62,10 @@
 }
 
 .selectBox {
-  background: #081423;
-  border: 1px solid #17324D;
-  border-radius: 12px;
-  color: #E8F1FF;
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
   padding: 8px 12px;
   font-size: 13px;
   font-family: inherit;
@@ -75,12 +77,12 @@
 }
 
 .filterBtn {
-  background: #081423;
-  border: 1px solid #17324D;
-  border-radius: 12px;
-  color: #7EA0C4;
-  width: 38px;
-  height: 38px;
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -91,48 +93,98 @@
   border-color: #22d3ee;
 }
 
-/* ============ Table ============ */
+/* ============ Table wrapper (scrolls both ways) ============ */
 .tableScroll {
-  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.tableScroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.tableScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tableScroll::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 2px solid var(--surface);
+}
+.tableScroll::-webkit-scrollbar-thumb:hover {
+  background: #22d3ee;
+}
+.tableScroll::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
+/* ============ Table ============ */
 .table {
   width: 100%;
+  min-width: 900px;
   border-collapse: collapse;
+  font-size: 13px;
   table-layout: fixed;
 }
 
-/* Column widths — keeps long text from stretching the table */
-.table thead th:nth-child(1) { width: 10%; }
-.table thead th:nth-child(2) { width: 16%; }
-.table thead th:nth-child(3) { width: 14%; }
-.table thead th:nth-child(4) { width: 16%; }
-.table thead th:nth-child(5) { width: 16%; }
-.table thead th:nth-child(6) { width: 8%;  }
-.table thead th:nth-child(7) { width: 12%; }
-.table thead th:nth-child(8) { width: 8%;  }
+/* Column widths — Time is frozen, everything else can scroll */
+.table thead th:nth-child(1) { width: 110px; } /* Time (frozen) */
+.table thead th:nth-child(2) { width: 150px; } /* Customer */
+.table thead th:nth-child(3) { width: 140px; } /* Amount */
+.table thead th:nth-child(4) { width: 160px; } /* Merchant */
+.table thead th:nth-child(5) { width: 140px; } /* Location */
+.table thead th:nth-child(6) { width: 80px;  } /* Risk */
+.table thead th:nth-child(7) { width: 130px; } /* Status */
+.table thead th:nth-child(8) { width: 90px;  } /* Action */
 
 .table thead th {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: #0D1B31;
-  color: #7EA0C4;
-  font-size: 12px;
+  background: rgba(7,20,35,0.85);
+  color: var(--muted);
+  font-size: 10.5px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   text-align: left;
-  padding: 12px;
+  padding: 10px 14px;
   white-space: nowrap;
-  box-shadow: inset 0 -1px 0 #17324D;
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+/* Frozen first column — HEADER (Time) */
+.table thead th:nth-child(1) {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background: rgba(7,20,35,0.95);
+  box-shadow:
+    inset 0 -1px 0 var(--border),
+    2px 0 0 0 var(--border);
+}
+
+/* Frozen first column — BODY */
+.table tbody td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--surface);
+  box-shadow: 2px 0 0 0 var(--border);
+}
+
+.table tbody tr:hover td:nth-child(1) {
+  background: #0f2038;
 }
 
 .table td {
-  padding: 14px 12px;
-  border-top: 1px solid #13253C;
-  color: #E8F1FF;
-  font-size: 14px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -146,7 +198,7 @@
   transition: background 0.15s;
 }
 .table tbody tr:hover {
-  background: #0F2038;
+  background: rgba(34, 211, 238, 0.04);
 }
 
 .clickableRow {
@@ -156,7 +208,22 @@
 .emptyCell {
   text-align: center;
   padding: 40px 16px;
-  color: #7EA0C4;
+  color: var(--muted);
+}
+
+/* ============ Time cell (two-line) ============ */
+.txTimeCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.txTimeMain {
+  font-weight: 500;
+  color: var(--text);
+}
+.txTimeDate {
+  font-size: 11px;
+  color: var(--muted);
 }
 
 /* ============ Risk score text ============ */
@@ -174,7 +241,7 @@
   display: inline-block;
   padding: 3px 10px;
   border-radius: 999px;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
   border: 1px solid transparent;
   white-space: nowrap;
@@ -202,30 +269,28 @@
 
 /* ============ View button ============ */
 .viewBtn {
-  background: transparent;
-  border: 1px solid #17324D;
-  color: #7EA0C4;
-  padding: 5px 14px;
-  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  color: #22d3ee;
+  padding: 4px 14px;
+  border-radius: 6px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
 }
 .viewBtn:hover {
-  color: #22d3ee;
-  border-color: #22d3ee;
-  background: rgba(34, 211, 238, 0.08);
+  background: rgba(34, 211, 238, 0.18);
 }
 
 /* ============ Pagination ============ */
 .pagination {
   flex-shrink: 0;
-  padding-top: 12px;
+  padding-top: 10px;
   font-size: 12px;
-  color: #7EA0C4;
+  color: var(--muted);
   text-align: right;
 }
 
@@ -233,11 +298,11 @@
 @media (max-width: 900px) {
   .table td,
   .table thead th {
-    padding: 12px 8px;
-    font-size: 13px;
+    padding: 9px 10px;
+    font-size: 12.5px;
   }
   .viewBtn {
-    padding: 4px 10px;
+    padding: 3px 10px;
     font-size: 11px;
   }
 }

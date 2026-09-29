@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { X, ArrowRight } from "lucide-react";
+import { formatCurrency } from "../../src/utils/format";
 import "./ThreatDrawer.css";
 
 export default function ThreatDrawer({ threat, onClose }) {
@@ -27,13 +28,21 @@ export default function ThreatDrawer({ threat, onClose }) {
           {Icon && (
             <div
               className="td-icon-circle"
-              style={{ color, backgroundColor: `${color}1A`, boxShadow: `0 0 12px ${color}33` }}
+              style={{
+                color,
+                backgroundColor: `${color}1A`,
+                boxShadow: `0 0 12px ${color}33`,
+              }}
             >
               <Icon size={20} />
             </div>
           )}
           <span className={`td-badge ${slug}`}>{severity}</span>
-          <button className="td-close" onClick={onClose} aria-label="Close">
+          <button
+            className="td-close"
+            onClick={onClose}
+            aria-label="Close"
+          >
             <X size={18} />
           </button>
         </div>
@@ -52,10 +61,17 @@ export default function ThreatDrawer({ threat, onClose }) {
             <div className="td-block">
               <div className="td-block-title">Related Transaction</div>
               <div className="td-grid">
-                <Detail label="Customer" value={transaction.customer} />
-                <Detail label="Amount" value={transaction.amount} />
-                <Detail label="Merchant" value={transaction.merchant} />
-                <Detail label="Location" value={transaction.location} />
+                <Detail label="Customer"   value={transaction.customer} />
+                <Detail
+                  label="Amount"
+                  value={
+                    typeof transaction.amount === "number"
+                      ? formatCurrency(transaction.amount)
+                      : transaction.amount
+                  }
+                />
+                <Detail label="Merchant"   value={transaction.merchant} />
+                <Detail label="Location"   value={transaction.location} />
                 <Detail label="Risk Score" value={transaction.risk} />
               </div>
             </div>
@@ -77,7 +93,7 @@ export default function ThreatDrawer({ threat, onClose }) {
             <button className="td-btn td-btn-ghost">Dismiss</button>
           </div>
           <Link
-            to={`/analyst/investigation?alert=${id}`}
+            to={`/analyst/investigations/new?alert=${id}`}
             className="td-full-link"
             onClick={onClose}
           >
