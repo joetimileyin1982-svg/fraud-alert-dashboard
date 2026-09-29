@@ -1,0 +1,17 @@
+export const transactions = [
+  { id: "TXN-849201", time: "09:45 AM", customer: "Bob Square",    amount: "₦120,000",   merchant: "Krusty Mart",     location: "Krusty Coast",   rules: ["HIGH_AMOUNT", "NEW_DEVICE"] },
+  { id: "TXN-849202", time: "10:15 AM", customer: "Patty Star",    amount: "₦450,000",   merchant: "JellyPay",        location: "Starfish Shore", rules: ["HIGH_AMOUNT", "VELOCITY"] },
+  { id: "TXN-849203", time: "11:33 AM", customer: "Gary Shell",    amount: "₦70,000",    merchant: "Bikini Transfer", location: "Bubble Bay",     rules: ["NEW_DEVICE", "NEW_LOCATION"] },
+  { id: "TXN-849204", time: "02:00 PM", customer: "Pearl Krabs",   amount: "₦60,000",    merchant: "Coral POS",       location: "Coral Cove",     rules: [] },
+  { id: "TXN-849205", time: "03:10 PM", customer: "Squid Ink",     amount: "₦1,250,000", merchant: "Pebble Pine",     location: "Pearl Pier",     rules: ["HIGH_AMOUNT", "NEW_LOCATION", "VELOCITY"] },
+  { id: "TXN-849206", time: "11:07 PM", customer: "Patty Star",    amount: "₦3,450,000", merchant: "Shelly Bay",      location: "Goo Lagoon",     rules: ["HIGH_AMOUNT", "NEW_DEVICE", "NEW_LOCATION", "VELOCITY", "MULTIPLE_ACCTS"] },
+  { id: "TXN-849207", time: "05:39 AM", customer: "Maple Muffin",  amount: "₦940,000",   merchant: "Pebble Pine",     location: "Pearl Pier",     rules: ["ODD_HOURS"] },
+  { id: "TXN-849208", time: "04:59 AM", customer: "Coral Finch",   amount: "₦50,000",    merchant: "Drift Coffee",    location: "Rocky Reef",     rules: ["HIGH_AMOUNT", "NEW_DEVICE", "NEW_LOCATION", "VELOCITY", "MULTIPLE_ACCTS", "ODD_HOURS"] },
+  { id: "TXN-849209", time: "08:21 AM", customer: "Sandy Cheeks",  amount: "₦2,100,000", merchant: "Acorn Bank",      location: "Kelp Forest",    rules: ["HIGH_AMOUNT", "NEW_LOCATION"] },
+  { id: "TXN-849210", time: "12:48 PM", customer: "Mr. Krabs",     amount: "₦8,500,000", merchant: "Krusty Mart",     location: "Bikini Bottom",  rules: ["HIGH_AMOUNT", "NEW_DEVICE", "VELOCITY"] },
+  { id: "TXN-849211", time: "07:12 AM", customer: "Plankton",      amount: "₦180,000",   merchant: "Chum Bucket",     location: "Bikini Bottom",  rules: ["NEW_DEVICE"] },
+  { id: "TXN-849212", time: "01:30 PM", customer: "Larry Lobster", amount: "₦320,000",   merchant: "Goo Lagoon Gym",  location: "Goo Lagoon",     rules: ["VELOCITY"] },
+  { id: "TXN-849213", time: "06:05 PM", customer: "Mrs. Puff",     amount: "₦45,000",    merchant: "Boat School",     location: "Bikini Bottom",  rules: [] },
+  { id: "TXN-849214", time: "09:12 PM", customer: "Barnacle Boy",  amount: "₦1,750,000", merchant: "Mermaid Man Inc", location: "Atlantis",       rules: ["HIGH_AMOUNT", "NEW_DEVICE", "NEW_LOCATION"] },
+  { id: "TXN-849215", time: "03:45 AM", customer: "Mermaid Man",   amount: "₦5,200,000", merchant: "Atlantis Bank",   location: "Atlantis",       rules: ["HIGH_AMOUNT", "NEW_LOCATION", "VELOCITY", "ODD_HOURS"] },
+];

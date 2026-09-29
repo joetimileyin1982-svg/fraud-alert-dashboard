@@ -8,6 +8,7 @@ import "./App.css";
 import AnalystDashboard from "../pages/analyst/Dashboard";
 import Transactions from "../pages/analyst/Transactions";
 import Investigation from "../pages/analyst/Investigation";
+import Customers from "../pages/analyst/Customers";
 import RiskAnalytics from "../pages/analyst/RiskAnalytics";
 import Notifications from "../pages/analyst/Notifications";
 
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/analyst/dashboard" element={<AnalystDashboard />} />
                 <Route path="/analyst/transactions" element={<Transactions />} />
                 <Route path="/analyst/investigation" element={<Investigation />} />
+                <Route path="/analyst/customers" element={<Customers />} />
                 <Route path="/analyst/risk-analytics" element={<RiskAnalytics />} />
                 <Route path="/analyst/notifications" element={<Notifications />} />
 

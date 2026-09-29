@@ -1,17 +1,11 @@
 import { X, ArrowUpRight } from "lucide-react";
+import { FRAUD_RULES } from "../../src/data/FraudRules";
 import "./TransactionDrawer.css";
 
-const RISK_BREAKDOWN = [
-  { label: "High Amount",  weight: 30 },
-  { label: "New Device",   weight: 20 },
-  { label: "New Location", weight: 20 },
-  { label: "Velocity",     weight: 17 },
-];
-
 const riskLevel = (score) => {
-  if (score >= 90) return "Critical";
-  if (score >= 70) return "High Risk";
-  if (score >= 40) return "Suspicious";
+  if (score >= 70) return "Critical";
+  if (score >= 50) return "High Risk";
+  if (score >= 25) return "Suspicious";
   return "Safe";
 };
 
@@ -27,6 +21,13 @@ export default function TransactionDrawer({
   const t = transaction;
   const level = riskLevel(t.risk);
 
+  const triggeredRules = (t.rules || []).map((key) => ({
+    key,
+    ...FRAUD_RULES[key],
+  }));
+
+  const total = triggeredRules.reduce((sum, r) => sum + r.weight, 0);
+
   return (
     <div className="drawerOverlay" onClick={onClose}>
       <div className="drawerPanel" onClick={(e) => e.stopPropagation()}>
@@ -37,7 +38,7 @@ export default function TransactionDrawer({
           </div>
           <div className="drawerHeaderText">
             <span className={`severityBadge ${slug(level)}`}>{level}</span>
-            <h2 className="drawerTitle mono">TXN-849201</h2>
+            <h2 className="drawerTitle mono">{t.id}</h2>
             <p className="drawerTime mono">{t.time}</p>
           </div>
           <button
@@ -49,7 +50,7 @@ export default function TransactionDrawer({
           </button>
         </div>
 
-        {/* Amount highlight */}
+        {/* Amount */}
         <div className="drawerAmount">
           <div className="drawerAmountValue mono">{t.amount}</div>
           <div className="drawerAmountLabel">Transaction Amount</div>
@@ -102,23 +103,27 @@ export default function TransactionDrawer({
           </div>
         </div>
 
-        {/* Triggered rules — receipt-style calculation */}
+        {/* Triggered rules */}
         <div className="drawerSection">
           <h4>Triggered Rules</h4>
-          <ul className="ruleList">
-            {RISK_BREAKDOWN.map((r, i) => (
-              <li key={i}>
-                <span className="ruleLabel">{r.label}</span>
+          {triggeredRules.length === 0 ? (
+            <p className="ruleEmpty">No rules triggered.</p>
+          ) : (
+            <ul className="ruleList">
+              {triggeredRules.map((r, i) => (
+                <li key={i}>
+                  <span className="ruleLabel">{r.label}</span>
+                  <span className="ruleDots" />
+                  <span className="ruleWeight mono">+{r.weight}</span>
+                </li>
+              ))}
+              <li className="ruleTotal">
+                <span className="ruleLabel">Total</span>
                 <span className="ruleDots" />
-                <span className="ruleWeight mono">+{r.weight}</span>
+                <span className="ruleWeight mono">{total}</span>
               </li>
-            ))}
-            <li className="ruleTotal">
-              <span className="ruleLabel">Total</span>
-              <span className="ruleDots" />
-              <span className="ruleWeight mono">{t.risk}</span>
-            </li>
-          </ul>
+            </ul>
+          )}
         </div>
 
         {/* Actions */}

@@ -1,0 +1,241 @@
+.cx-page {
+  padding: 24px 28px 60px;
+  color: #E8F1FF;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.cx-header {
+  margin-bottom: 18px;
+}
+.cx-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: #f1f5f9;
+}
+.cx-header p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Toolbar */
+.cx-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cx-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0b1220;
+  border: 1px solid #17324D;
+  border-radius: 10px;
+  padding: 10px 14px;
+  max-width: 520px;
+  color: #22d3ee;
+}
+.cx-search:focus-within {
+  border-color: #22d3ee;
+}
+.cx-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #e2e8f0;
+  font-size: 13.5px;
+  font-family: inherit;
+}
+.cx-search input::placeholder {
+  color: #475569;
+}
+.cx-search button {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.cx-search button:hover {
+  color: #22d3ee;
+}
+
+.cx-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cx-chip {
+  background: none;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.cx-chip:hover {
+  color: #e2e8f0;
+  border-color: #475569;
+}
+.cx-chip.active {
+  color: #22d3ee;
+  border-color: #22d3ee;
+  background: rgba(34, 211, 238, 0.08);
+}
+
+/* Table */
+.cx-table-wrap {
+  background: #0b1220;
+  border: 1px solid #17324D;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  table-layout: fixed;
+}
+
+.cx-table thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  padding: 14px 16px;
+  background: #0f172a;
+  border-bottom: 1px solid #17324D;
+  font-weight: 600;
+}
+
+.cx-table th.num,
+.cx-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cx-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #13253C;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cx-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cx-table tbody tr:hover {
+  background: #0f172a;
+}
+.cx-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cx-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cx-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #164e63, #4c1d95);
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.cx-name {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+.cx-id {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.cx-score {
+  font-weight: 700;
+}
+
+.cx-muted {
+  color: #94a3b8;
+}
+
+.cx-table .arrow {
+  color: #475569;
+  width: 20px;
+}
+.cx-table tbody tr:hover .arrow {
+  color: #22d3ee;
+}
+
+.cx-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: #64748b;
+}
+
+/* Badges */
+.cx-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.cx-badge.critical {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.10);
+  border-color: rgba(239, 68, 68, 0.45);
+}
+.cx-badge.high {
+  color: #f472b6;
+  background: rgba(244, 114, 182, 0.10);
+  border-color: rgba(244, 114, 182, 0.40);
+}
+.cx-badge.review {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.10);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+.cx-badge.low {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.10);
+  border-color: rgba(52, 211, 153, 0.35);
+}
+.cx-badge.status-active {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.08);
+  border-color: rgba(52, 211, 153, 0.25);
+}
+.cx-badge.status-suspended {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.cx-score.critical { color: #ef4444; }
+.cx-score.high     { color: #f472b6; }
+.cx-score.review   { color: #fbbf24; }
+.cx-score.low      { color: #34d399; }
