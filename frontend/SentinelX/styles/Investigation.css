@@ -1,0 +1,485 @@
+/* Outer Page Wrapper - Fits strictly into parent container */
+.investigationContainer {
+  background: #071423;
+  color: #f1f5f9;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-x: hidden; /* Stops horizontal scrollbars */
+}
+
+/* Header */
+.investigationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #090e1a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.backBtn {
+  background: #111a2e;
+  border: 1px solid #1d2d4a;
+  color: #00e5ff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.headerTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pageTitle {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+
+.caseIdTag {
+  background: #1e293b;
+  color: #00e5ff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.headerActions {
+  display: flex;
+  gap: 6px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actionBtn.approve { background: #10b981; color: #fff; }
+.actionBtn.escalate { background: #ffb300; color: #000; }
+.actionBtn.block { background: #ff1744; color: #fff; }
+
+/* 2-Column Responsive Layout */
+.investigationGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr; /* Fixed sidebar, fluid content */
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Left Queue Sidebar */
+.queueSidebar {
+  background: #090e1a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.queueSearchBox {
+  display: flex;
+  align-items: center;
+  background: #0f1a2e;
+  border: 1px solid #1c2e4a;
+  border-radius: 5px;
+  padding: 5px 8px;
+  gap: 6px;
+}
+
+.queueSearchBox input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 11px;
+  width: 100%;
+}
+
+.searchIcon {
+  color: #64748b;
+}
+
+.queueFilterTabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 4px;
+}
+
+.filterTab {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 10px;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+
+.filterTab.active {
+  color: #00e5ff;
+  font-weight: 600;
+  border-bottom: 2px solid #00e5ff;
+}
+
+.queueList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.queueCard {
+  background: #0d1527;
+  border: 1px solid #1b283f;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.queueCard:hover,
+.queueCard.selected {
+  background: #121e36;
+  border-color: #00e5ff;
+}
+
+.queueCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.queueTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.queueBadge {
+  font-size: 8px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.queueBadge.critical { background: rgba(255, 23, 68, 0.2); color: #ff1744; }
+.queueBadge.high { background: rgba(255, 0, 127, 0.2); color: #ff007f; }
+.queueBadge.warning { background: rgba(255, 179, 0, 0.2); color: #ffb300; }
+
+.queueSub {
+  font-size: 10px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.queueFooter {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Right Main Workspace */
+.caseDetailPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0; /* Prevents child flex containers from expanding beyond parent */
+}
+
+.riskSummaryCard {
+  background: #090e1a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.scoreCircle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 3px solid #ff1744;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 23, 68, 0.05);
+  flex-shrink: 0;
+}
+
+.scoreVal {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.scoreLbl {
+  font-size: 7px;
+  color: #94a3b8;
+}
+
+.caseMainTitle {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.caseDescription {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 2px 0 6px 0;
+}
+
+.metaPills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background: #111a2e;
+  border: 1px solid #1d2d4a;
+  color: #00e5ff;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.infoCard {
+  background: #090e1a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.cardIcon {
+  color: #00e5ff;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 12px;
+  color: #fff;
+}
+
+.infoRows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  color: #94a3b8;
+}
+
+.highlightAmount {
+  color: #00e5ff;
+}
+
+.statusActive {
+  color: #ff1744;
+}
+
+/* Tabbed Workspace Card */
+.workspaceTabCard {
+  background: #090e1a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabHeader {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+}
+
+.tabBtn.active {
+  background: #111a2e;
+  color: #00e5ff;
+  border: 1px solid #1d2d4a;
+}
+
+.timelineStream {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 8px;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.marker {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.marker.blue { background: #00e5ff; }
+.marker.yellow { background: #ffb300; }
+.marker.red { background: #ff1744; }
+
+.timelineContent p {
+  margin: 1px 0 0 0;
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+.timelineContent .time {
+  font-size: 9px;
+  color: #64748b;
+}
+
+.notesWorkspace {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activityLog {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.logEntry {
+  background: #0d1527;
+  border: 1px solid #1b283f;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.logMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #00e5ff;
+  margin-bottom: 2px;
+}
+
+.logText {
+  font-size: 10px;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.noteInputForm {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.noteInputForm input {
+  flex: 1;
+  background: #0d1527;
+  border: 1px solid #1b283f;
+  border-radius: 4px;
+  padding: 6px;
+  color: #fff;
+  font-size: 11px;
+  outline: none;
+}
+
+.sendNoteBtn {
+  background: #00e5ff;
+  border: none;
+  color: #071423;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 900px) {
+  .investigationGrid {
+    grid-template-columns: 1fr;
+  }
+}

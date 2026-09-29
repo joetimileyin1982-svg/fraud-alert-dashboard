@@ -1,0 +1,338 @@
+/* ============ Overlay ============ */
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 100;
+  animation: txFade 0.18s ease-out;
+}
+
+@keyframes txFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(24px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ============ Panel ============ */
+.drawerPanel {
+  width: 460px;
+  max-width: 92vw;
+  height: 100%;
+  background: #0D1B31;
+  border-left: 1px solid #17324D;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  color: #E8F1FF;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  animation: slideIn 0.22s ease-out;
+}
+
+/* ============ Header ============ */
+.drawerHeader {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.drawerHeaderText {
+  flex: 1;
+  min-width: 0;
+}
+
+.drawerIconWrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.drawerIconWrapper.critical {
+  color: #ff1744;
+  background: rgba(255, 23, 68, 0.10);
+  box-shadow: 0 0 12px rgba(255, 23, 68, 0.20);
+}
+.drawerIconWrapper.high-risk {
+  color: #ff007f;
+  background: rgba(255, 0, 127, 0.10);
+  box-shadow: 0 0 12px rgba(255, 0, 127, 0.20);
+}
+.drawerIconWrapper.suspicious {
+  color: #ffb300;
+  background: rgba(255, 179, 0, 0.10);
+}
+.drawerIconWrapper.safe {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.10);
+}
+
+.drawerTitle {
+  margin: 6px 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #E8F1FF;
+}
+
+.drawerTime {
+  margin: 0;
+  font-size: 13px;
+  color: #7EA0C4;
+}
+
+.drawerCloseBtn {
+  background: none;
+  border: 1px solid #17324D;
+  color: #7EA0C4;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.drawerCloseBtn:hover {
+  color: #22d3ee;
+  border-color: #22d3ee;
+}
+
+/* ============ Amount highlight ============ */
+.drawerAmount {
+  text-align: center;
+  padding: 20px;
+  background: #081423;
+  border: 1px solid #17324D;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+.drawerAmountValue {
+  font-size: 30px;
+  font-weight: 700;
+  color: #E8F1FF;
+  letter-spacing: -0.01em;
+}
+.drawerAmountLabel {
+  font-size: 12px;
+  color: #7EA0C4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* ============ Sections ============ */
+.drawerSection {
+  border-top: 1px solid #17324D;
+  padding-top: 16px;
+  margin-bottom: 18px;
+}
+
+.drawerSection h4 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #7EA0C4;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ============ Detail grid ============ */
+.drawerDetailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+}
+.drawerDetailGrid div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.drawerDetailGrid span {
+  font-size: 12px;
+  color: #7EA0C4;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.drawerDetailGrid strong {
+  font-size: 15px;
+  color: #E8F1FF;
+  font-weight: 500;
+}
+
+/* ============ Risk bar ============ */
+.riskRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.riskBar {
+  flex: 1;
+  height: 10px;
+  background: #081423;
+  border: 1px solid #17324D;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.riskFill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.riskFill.safe        { background: #34d399; }
+.riskFill.suspicious  { background: #ffb300; }
+.riskFill.high-risk   { background: #ff007f; }
+.riskFill.critical    { background: #ff1744; }
+
+.riskValue {
+  font-size: 15px;
+  font-weight: 700;
+}
+.riskValue.safe        { color: #34d399; }
+.riskValue.suspicious  { color: #ffb300; }
+.riskValue.high-risk   { color: #ff007f; }
+.riskValue.critical    { color: #ff1744; }
+
+/* ============ Triggered rules (receipt style, compact) ============ */
+.ruleBlock {
+  max-width: 320px;
+}
+
+.ruleList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ruleList li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #13253C;
+  font-size: 14px;
+}
+.ruleList li:last-child {
+  border-bottom: none;
+}
+
+.ruleLabel {
+  color: #E8F1FF;
+  flex-shrink: 0;
+}
+
+/* dotted leader, like a receipt or an old-school table of contents */
+.ruleDots {
+  flex: 1;
+  border-bottom: 1px dotted #17324D;
+  margin: 0 4px 4px 4px;
+  min-width: 20px;
+}
+
+.ruleWeight {
+  color: #22d3ee;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* total row gets emphasis */
+.ruleTotal {
+  border-top: 1px solid #17324D;
+  margin-top: 4px;
+  padding-top: 12px !important;
+}
+.ruleTotal .ruleLabel {
+  color: #7EA0C4;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.ruleTotal .ruleWeight {
+  color: #ff1744;
+  font-size: 16px;
+}
+
+/* ============ Severity badge ============ */
+.severityBadge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid transparent;
+}
+.severityBadge.critical {
+  background: rgba(255, 23, 68, 0.10);
+  color: #ff1744;
+  border-color: rgba(255, 23, 68, 0.45);
+}
+.severityBadge.high-risk {
+  background: rgba(255, 0, 127, 0.10);
+  color: #ff007f;
+  border-color: rgba(255, 0, 127, 0.40);
+}
+.severityBadge.suspicious {
+  background: rgba(255, 179, 0, 0.10);
+  color: #ffb300;
+  border-color: rgba(255, 179, 0, 0.40);
+}
+.severityBadge.safe {
+  background: rgba(52, 211, 153, 0.10);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.40);
+}
+
+/* ============ Actions ============ */
+.drawerActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  flex: 1;
+  min-width: 130px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #17324D;
+  background: transparent;
+  color: #E8F1FF;
+  transition: all 0.15s;
+}
+
+.actionSecondary:hover {
+  border-color: #22d3ee;
+  color: #22d3ee;
+}
+
+.actionPrimary {
+  background: rgba(34, 211, 238, 0.10);
+  border-color: rgba(34, 211, 238, 0.45);
+  color: #22d3ee;
+}
+.actionPrimary:hover {
+  background: rgba(34, 211, 238, 0.18);
+}
