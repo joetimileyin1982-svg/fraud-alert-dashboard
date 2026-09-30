@@ -30,7 +30,7 @@ import {
   timeOfDayActivity,
   emergingSignals,
 } from "../../src/data/analytics";
-import "../../styles/RiskAnalytics.css";
+import "./styles/RiskAnalytics.css";
 
 /* ============================================================
    Reusable bits

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/Dashboard.css";
+import "./styles/Dashboard.css";
 import StatCard from "../../components/dashboard/StatCard";
 import TransactionTrendChart from "../../components/analytics/TransactionTrendChart";
 import RiskDistributionChart from "../../components/analytics/RiskDistributionChart";

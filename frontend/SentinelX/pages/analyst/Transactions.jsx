@@ -16,7 +16,7 @@ import { transactions } from "../../src/data/transactions";
 import { computeRiskScore, riskBucket, riskLabel } from "../../src/data/FraudRules";
 import { formatCurrency } from "../../src/utils/format";
 import TransactionDrawer from "../../components/transactions/TransactionDrawer";
-import "../../styles/Transactions.css";
+import "./styles/Transactions.css";
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50];
 const RISK_FILTERS = ["All", "Safe", "Suspicious", "High Risk", "Critical"];

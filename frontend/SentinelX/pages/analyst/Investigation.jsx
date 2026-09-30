@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { alertsData } from "../../src/data/AlertsData";
 import { formatCurrency } from "../../src/utils/format";
-import "../../styles/Investigation.css";
+import "./styles/Investigation.css";
 
 export default function Investigation() {
   const location = useLocation();

@@ -11,6 +11,7 @@ import Investigation from "../pages/analyst/Investigation";
 import Customers from "../pages/analyst/Customers";
 import RiskAnalytics from "../pages/analyst/RiskAnalytics";
 import Notifications from "../pages/analyst/Notifications";
+import Reports from "../pages/analyst/Reports";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
                 <Route path="/analyst/dashboard" element={<AnalystDashboard />} />
                 <Route path="/analyst/transactions" element={<Transactions />} />
 
-                {/* Plural — matches the drawers' navigation */}
+                {/* Investigations — plural, with new + id variants */}
                 <Route path="/analyst/investigations" element={<Investigation />} />
                 <Route path="/analyst/investigations/new" element={<Investigation />} />
                 <Route path="/analyst/investigations/:id" element={<Investigation />} />
@@ -37,8 +38,9 @@ function App() {
                 <Route path="/analyst/customers" element={<Customers />} />
                 <Route path="/analyst/risk-analytics" element={<RiskAnalytics />} />
                 <Route path="/analyst/notifications" element={<Notifications />} />
+                <Route path="/analyst/reports" element={<Reports />} />
 
-                {/* Redirect legacy singular link to plural */}
+                {/* Redirect legacy singular → plural */}
                 <Route
                   path="/analyst/investigation"
                   element={<Navigate to="/analyst/investigations" replace />}
