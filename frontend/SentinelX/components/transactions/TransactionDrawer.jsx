@@ -1,5 +1,5 @@
 import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import { FRAUD_RULES } from "../../src/data/FraudRules.js";
+import { FRAUD_RULES } from "../../src/data/FraudRules";
 import { formatCurrency } from "../../src/utils/format";
 import "./TransactionDrawer.css";
 
@@ -73,7 +73,9 @@ export default function TransactionDrawer({
         {/* ============ Amount + risk score ============ */}
         <section className="td-amount-row">
           <div>
-            <div className="td-amount-value mono">{formatCurrency(t.amount)}</div>
+            <div className="td-amount-value mono">
+              {formatCurrency(t.amount)}
+            </div>
             <div className="td-amount-sub">
               {dateText} · {timeText}
             </div>
@@ -108,42 +110,66 @@ export default function TransactionDrawer({
             </button>
           </div>
           <ul className="td-kv">
-            <li><span>Email</span><span>{t.customer.toLowerCase().replace(" ", ".")}@sentinelx.com</span></li>
-            <li><span>Phone</span><span>+234 801 234 5678</span></li>
-            <li><span>Customer Since</span><span>Jan 2025</span></li>
-            <li><span>Account Status</span><span className="td-status-dot"><i /> Active</span></li>
+            <li>
+              <span>Email</span>
+              <span>
+                {t.customer.toLowerCase().replace(" ", ".")}@sentinelx.com
+              </span>
+            </li>
+            <li>
+              <span>Phone</span>
+              <span>+234 801 234 5678</span>
+            </li>
+            <li>
+              <span>Customer Since</span>
+              <span>Jan 2025</span>
+            </li>
+            <li>
+              <span>Account Status</span>
+              <span className="td-status-dot">
+                <i /> Active
+              </span>
+            </li>
           </ul>
         </section>
 
-        {/* ============ Merchant card ============ */}
+        {/* ============ Merchant card — info only ============ */}
         <section className="td-card">
           <div className="td-card-head">
             <span className="td-card-icon">🏪</span>
             <h4>Merchant</h4>
           </div>
-          <div className="td-cust-row">
+          <div className="td-cust-row td-cust-row--simple">
             <div className="td-cust-info">
               <div>
                 <div className="td-cust-name">{t.merchant}</div>
                 <div className="td-cust-id">{t.location}</div>
               </div>
             </div>
-            <button className="td-outline-btn">View Merchant</button>
           </div>
           <ul className="td-kv">
-            <li><span>Category</span><span>{t.merchantCategory}</span></li>
-            <li><span>Payment Type</span><span>{t.paymentType}</span></li>
-            <li><span>Merchant ID</span><span className="mono">{t.merchantId}</span></li>
+            <li>
+              <span>Category</span>
+              <span>{t.merchantCategory}</span>
+            </li>
+            <li>
+              <span>Payment Type</span>
+              <span>{t.paymentType}</span>
+            </li>
+            <li>
+              <span>Merchant ID</span>
+              <span className="mono">{t.merchantId}</span>
+            </li>
           </ul>
         </section>
 
-        {/* ============ Device card ============ */}
+        {/* ============ Device card — info only ============ */}
         <section className="td-card">
           <div className="td-card-head">
             <span className="td-card-icon">📱</span>
             <h4>Device</h4>
           </div>
-          <div className="td-cust-row">
+          <div className="td-cust-row td-cust-row--simple">
             <div className="td-cust-info">
               <div>
                 <div className="td-cust-name">
@@ -152,12 +178,20 @@ export default function TransactionDrawer({
                 <div className="td-cust-id mono">{t.device}</div>
               </div>
             </div>
-            <button className="td-outline-btn">View Device</button>
           </div>
           <ul className="td-kv">
-            <li><span>IP Address</span><span className="mono">{t.ip}</span></li>
-            <li><span>Location</span><span>{t.location}</span></li>
-            <li><span>First Seen</span><span>May 7, 2025 · 10:42 AM</span></li>
+            <li>
+              <span>IP Address</span>
+              <span className="mono">{t.ip}</span>
+            </li>
+            <li>
+              <span>Location</span>
+              <span>{t.location}</span>
+            </li>
+            <li>
+              <span>First Seen</span>
+              <span>May 7, 2025 · 10:42 AM</span>
+            </li>
           </ul>
         </section>
 
@@ -188,7 +222,9 @@ export default function TransactionDrawer({
         {/* ============ Actions ============ */}
         <footer className="td-actions">
           <div className="td-actions-row">
-            <button className="td-btn td-btn-ghost">Mark as False Positive</button>
+            <button className="td-btn td-btn-ghost">
+              Mark as False Positive
+            </button>
             <button className="td-btn td-btn-warn">Escalate</button>
           </div>
           <button
