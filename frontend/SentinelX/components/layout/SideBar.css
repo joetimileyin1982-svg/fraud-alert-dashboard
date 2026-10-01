@@ -1,91 +1,221 @@
-
+/* ============================================================
+   Sidebar — shared for Admin + Analyst
+   ============================================================ */
 
 .sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  height: 100%;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 20px 12px; 
+  padding: 16px 12px 14px;
   box-sizing: border-box;
-  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-.navItem {
-  display: flex;
-  align-items: center;
-  gap: 10px; 
-  padding: 10px 10px;
-  border-radius: 10px;
-  color: #7ea0c4;
-  font-size: 13px; 
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
+.sidebar::-webkit-scrollbar {
+  width: 6px;
 }
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+/* ============ Logo / brand ============ */
 .sidebarLogo {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 28px;
-  padding: 0 8px;
+  padding: 4px 8px 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+  flex-shrink: 0;
 }
 
 .logoTitle {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: #fff;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 .logoSub {
-  margin: 0;
-  font-size: 11px;
-  color: #7ea0c4;
+  margin: 2px 0 0;
+  font-size: 10.5px;
+  color: #A66CFF;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  line-height: 1.15;
 }
 
+/* ============ Nav list ============ */
 .sidebarNav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   flex: 1;
+  min-height: 0;
 }
 
+/* ============ Nav item ============ */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  position: relative;
+  white-space: nowrap;
+}
 
+.navItem svg {
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
 
+.navItem span:not(.navBadge) {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover */
 .navItem:hover {
-  background: #0d1b2a;
-  color: #e8f1ff;
+  background: rgba(34, 211, 238, 0.06);
+  color: var(--text);
+}
+.navItem:hover svg {
+  opacity: 1;
 }
 
+/* Active */
 .navItemActive {
-  background: #0d1b2a;
-  color: #a66cff;
-  border: 1px solid rgba(166, 108, 255, 0.3);
-  box-shadow: 0 0 12px rgba(166, 108, 255, 0.18);
+  background: linear-gradient(
+    90deg,
+    rgba(34, 211, 238, 0.14) 0%,
+    rgba(34, 211, 238, 0.06) 100%
+  );
+  color: #22d3ee;
+  font-weight: 600;
+}
+.navItemActive svg {
+  opacity: 1;
+  color: #22d3ee;
 }
 
+/* Left accent bar on active */
+.navItemActive::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: #22d3ee;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+}
+
+/* ============ Badge (e.g. Notifications: 3) ============ */
 .navBadge {
-  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: #ff007f;
-  color: #fff;
-  font-size: 11px;
-  padding: 1px 7px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
   border-radius: 999px;
-  box-shadow: 0 0 6px rgba(255, 0, 127, 0.6);
+  box-shadow: 0 0 8px rgba(255, 0, 127, 0.55);
+  flex-shrink: 0;
+  line-height: 1;
 }
 
+/* ============ Footer ============ */
 .sidebarFooter {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-top: 14px;
+  padding: 12px 10px 4px;
+  border-top: 1px solid var(--border);
   font-size: 12px;
-  color: #7ea0c4;
-  padding: 12px 8px 0;
-  border-top: 1px solid #17324d;
+  color: var(--muted);
+  flex-shrink: 0;
 }
 
 .statusDot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #35f2b0;
-  box-shadow: 0 0 6px #35f2b0;
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+  animation: sidebarPulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes sidebarPulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 72px;
+    padding: 16px 8px 14px;
+  }
+  .sidebarLogo {
+    justify-content: center;
+    padding: 4px 0 18px;
+  }
+  .sidebarLogo > div {
+    display: none;
+  }
+  .navItem {
+    justify-content: center;
+    padding: 10px;
+  }
+  .navItem span:not(.navBadge) {
+    display: none;
+  }
+  .navItemActive::before {
+    display: none;
+  }
+  .navBadge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 9px;
+    padding: 0 4px;
+  }
+  .sidebarFooter {
+    justify-content: center;
+    font-size: 0;
+    padding: 12px 0 4px;
+  }
 }

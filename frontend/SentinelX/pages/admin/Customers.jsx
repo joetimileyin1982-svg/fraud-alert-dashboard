@@ -1,197 +1,314 @@
-// src/pages/analyst/Customers.jsx
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
-  SlidersHorizontal,
   X,
-  ShieldAlert,
-  Smartphone,
-  MapPin,
-  Clock,
-  ArrowUpRight,
   ChevronRight,
+  MoreVertical,
+  Pencil,
+  Power,
+  Flag,
+  Trash2,
+  Users,
+  UserCheck,
   UserX,
+  AlertTriangle,
+  Plus,
+  Download,
 } from "lucide-react";
-import { customers } from "../../data/customers";
-import "./Customers.css";
+import { customers as initialCustomers } from "../../src/data/customers";
+import { transactions } from "../../src/data/transactions";
+import {
+  computeRiskScore,
+  riskBucket,
+  riskLabel,
+} from "../../src/data/fraudRules";
+import { formatCurrency } from "../../src/utils/format";
+import CustomerFormDrawer from "../../components/admin/CustomerFormDrawer";
+import "./styles/Customers.css";
 
-const RISK_FILTERS = ["All", "Safe", "Suspicious", "High Risk", "Critical"];
 const STATUS_FILTERS = ["All", "Active", "Suspended"];
 
-const formatCurrency = (n) =>
-  new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    maximumFractionDigits: 0,
-  }).format(n);
-
-const formatRelative = (iso) => {
-  const diff = Date.now() - new Date(iso).getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins}m ago`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
-  return `${Math.floor(hrs / 24)}d ago`;
-};
-
-const initials = (name) =>
-  name.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase();
-
-// Convert "High Risk" → "high-risk" for CSS class suffixes
-const riskSlug = (level) => level.toLowerCase().replace(/\s+/g, "-");
+function deriveRisk(customer) {
+  const theirTxns = transactions.filter((t) => t.customer === customer.name);
+  const scores = theirTxns.map((t) => computeRiskScore(t.rules));
+  const maxScore = scores.length ? Math.max(...scores) : 0;
+  return {
+    score: maxScore,
+    bucket: riskBucket(maxScore),
+    label: riskLabel(maxScore),
+  };
+}
 
 export default function Customers() {
   const navigate = useNavigate();
+  const [customers, setCustomers] = useState(initialCustomers);
   const [query, setQuery] = useState("");
-  const [riskFilter, setRiskFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [selected, setSelected] = useState(null);
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const [editing, setEditing] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
+
+  const enriched = useMemo(
+    () =>
+      customers.map((c) => ({
+        ...c,
+        ...deriveRisk(c),
+      })),
+    [customers]
+  );
+
+  const kpis = useMemo(() => {
+    const total = enriched.length;
+    const active = enriched.filter((c) => c.accountStatus === "Active").length;
+    const suspended = enriched.filter(
+      (c) => c.accountStatus === "Suspended"
+    ).length;
+    const highRisk = enriched.filter(
+      (c) => c.bucket === "critical" || c.bucket === "high"
+    ).length;
+    return { total, active, suspended, highRisk };
+  }, [enriched]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return customers.filter((c) => {
+    return enriched.filter((c) => {
       const matchesQuery =
         !q ||
         c.name.toLowerCase().includes(q) ||
         c.id.toLowerCase().includes(q) ||
         c.email.toLowerCase().includes(q) ||
         c.location.toLowerCase().includes(q);
-      const matchesRisk = riskFilter === "All" || c.riskLevel === riskFilter;
       const matchesStatus =
         statusFilter === "All" || c.accountStatus === statusFilter;
-      return matchesQuery && matchesRisk && matchesStatus;
+      return matchesQuery && matchesStatus;
     });
-  }, [query, riskFilter, statusFilter]);
+  }, [enriched, query, statusFilter]);
 
-  const handleOpenInvestigation = (c) => {
-    // Wire this to your investigation route
-    navigate(`/analyst/investigations/new?customer=${c.id}`);
+  // ============ Actions ============
+  const toggleStatus = (customer) => {
+    setCustomers((prev) =>
+      prev.map((c) =>
+        c.id === customer.id
+          ? {
+              ...c,
+              accountStatus:
+                c.accountStatus === "Active" ? "Suspended" : "Active",
+            }
+          : c
+      )
+    );
+    setOpenMenuId(null);
+  };
+
+  const deleteCustomer = (customer) => {
+    setCustomers((prev) => prev.filter((c) => c.id !== customer.id));
+    setConfirmDelete(null);
+    setOpenMenuId(null);
+  };
+
+  const saveCustomer = (customer) => {
+    if (customer.id) {
+      // Update
+      setCustomers((prev) =>
+        prev.map((c) => (c.id === customer.id ? { ...c, ...customer } : c))
+      );
+    } else {
+      // Create
+      const newCustomer = {
+        ...customer,
+        id: `CUST-${String(1200 + customers.length + 1).padStart(4, "0")}`,
+        lastActivity: new Date().toISOString(),
+        devices: [],
+        riskSignals: [],
+      };
+      setCustomers((prev) => [...prev, newCustomer]);
+    }
+    setEditing(null);
   };
 
   return (
-    <div className="customers-page">
-      {/* ---------- Header ---------- */}
-      <header className="cx-header">
+    <div className="ac-page">
+      {/* ============ Header ============ */}
+      <header className="ac-header">
         <div>
-          <h1 className="cx-title">Customers</h1>
-          <p className="cx-subtitle">
-            {filtered.length} of {customers.length} customers
-          </p>
+          <h1>Customers</h1>
+          <p>Oversee customer accounts, risk levels, and activity.</p>
+        </div>
+        <div className="ac-header-actions">
+          <button className="ac-export">
+            <Download size={13} /> Export
+          </button>
+          <button
+            className="ac-create-btn"
+            onClick={() => setEditing("new")}
+          >
+            <Plus size={13} /> Add Customer
+          </button>
         </div>
       </header>
 
-      {/* ---------- Toolbar ---------- */}
-      <div className="cx-toolbar">
-        <div className="cx-search">
+      {/* ============ KPI strip ============ */}
+      <section className="ac-kpi-row">
+        <KPI
+          icon={Users}
+          label="Total Customers"
+          value={kpis.total}
+          tone="cyan"
+        />
+        <KPI
+          icon={UserCheck}
+          label="Active"
+          value={kpis.active}
+          tone="green"
+        />
+        <KPI
+          icon={UserX}
+          label="Suspended"
+          value={kpis.suspended}
+          tone="red"
+        />
+        <KPI
+          icon={AlertTriangle}
+          label="High Risk"
+          value={kpis.highRisk}
+          tone="pink"
+        />
+      </section>
+
+      {/* ============ Toolbar ============ */}
+      <section className="ac-toolbar">
+        <div className="ac-search">
           <Search size={16} />
           <input
-            type="text"
-            placeholder="Search name, customer ID, email, location..."
+            placeholder="Search by name, ID, email, location..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           {query && (
-            <button
-              className="cx-search-clear"
-              onClick={() => setQuery("")}
-              aria-label="Clear search"
-            >
+            <button onClick={() => setQuery("")} aria-label="Clear">
               <X size={14} />
             </button>
           )}
         </div>
 
-        <div className="cx-filters">
-          <SlidersHorizontal size={14} className="cx-filter-icon" />
-          <span className="cx-filter-label">Risk:</span>
-          {RISK_FILTERS.map((f) => (
-            <button
-              key={f}
-              className={`cx-chip ${riskFilter === f ? "cx-chip--active" : ""}`}
-              onClick={() => setRiskFilter(f)}
-            >
-              {f}
-            </button>
-          ))}
-          <span className="cx-filter-sep" />
-          <span className="cx-filter-label">Status:</span>
+        <div className="ac-chips">
           {STATUS_FILTERS.map((f) => (
             <button
               key={f}
-              className={`cx-chip ${statusFilter === f ? "cx-chip--active" : ""}`}
+              className={`ac-chip ${statusFilter === f ? "active" : ""}`}
               onClick={() => setStatusFilter(f)}
             >
               {f}
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* ---------- Table ---------- */}
-      <div className="cx-table-wrapper">
-        <table className="cx-table">
+      {/* ============ Table ============ */}
+      <div className="ac-table-wrap">
+        <table className="ac-table">
           <thead>
             <tr>
               <th>Customer</th>
-              <th>Risk Level</th>
-              <th className="cx-num">Risk Score</th>
-              <th className="cx-num">Transactions</th>
-              <th className="cx-num">Total Value</th>
-              <th>Last Activity</th>
+              <th>Location</th>
+              <th className="num">Transactions</th>
+              <th className="num">Total Value</th>
+              <th className="num">Risk</th>
               <th>Status</th>
-              <th aria-label="Open" />
+              <th />
             </tr>
           </thead>
           <tbody>
             {filtered.map((c) => (
-              <tr
-                key={c.id}
-                className="cx-row"
-                onClick={() => setSelected(c)}
-              >
+              <tr key={c.id}>
                 <td>
-                  <div className="cx-cust-cell">
-                    <div className="cx-avatar">{initials(c.name)}</div>
-                    <div>
-                      <div className="cx-cust-name">{c.name}</div>
-                      <div className="cx-cust-id">{c.id}</div>
-                    </div>
-                  </div>
+                  <div className="ac-name">{c.name}</div>
+                  <div className="ac-id mono">{c.id}</div>
                 </td>
-                <td>
-                  <span className={`cx-badge cx-badge--${riskSlug(c.riskLevel)}`}>
-                    {c.riskLevel}
+                <td className="ac-muted">{c.location}</td>
+                <td className="num mono">
+                  {c.totalTransactions.toLocaleString()}
+                </td>
+                <td className="num mono">
+                  {formatCurrency(c.totalValue)}
+                </td>
+                <td className="num">
+                  <span className={`ac-score mono ${c.bucket}`}>
+                    {c.score}
                   </span>
                 </td>
-                <td className="cx-num">
-                  <span
-                    className={`cx-score cx-score--${riskSlug(c.riskLevel)}`}
-                  >
-                    {c.riskScore}
-                  </span>
-                </td>
-                <td className="cx-num">{c.totalTransactions.toLocaleString()}</td>
-                <td className="cx-num">{formatCurrency(c.totalValue)}</td>
-                <td className="cx-muted">{formatRelative(c.lastActivity)}</td>
                 <td>
                   <span
-                    className={`cx-badge cx-badge--status-${c.accountStatus.toLowerCase()}`}
+                    className={`ac-status status-${c.accountStatus.toLowerCase()}`}
                   >
                     {c.accountStatus}
                   </span>
                 </td>
-                <td className="cx-row-action">
-                  <ChevronRight size={16} />
+                <td className="ac-action-cell">
+                  <button
+                    className="ac-menu-btn"
+                    onClick={() =>
+                      setOpenMenuId(openMenuId === c.id ? null : c.id)
+                    }
+                    aria-label="Actions"
+                  >
+                    <MoreVertical size={14} />
+                  </button>
+
+                  {openMenuId === c.id && (
+                    <div
+                      className="ac-menu"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        className="ac-menu-item"
+                        onClick={() => {
+                          navigate(`/admin/customers/${c.id}`);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <ChevronRight size={13} /> View Profile
+                      </button>
+                      <button
+                        className="ac-menu-item"
+                        onClick={() => {
+                          setEditing(c);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <Pencil size={13} /> Edit Customer
+                      </button>
+                      <button className="ac-menu-item">
+                        <Flag size={13} /> Flag for Review
+                      </button>
+                      <button
+                        className="ac-menu-item"
+                        onClick={() => toggleStatus(c)}
+                      >
+                        <Power size={13} />
+                        {c.accountStatus === "Active" ? "Suspend" : "Activate"}
+                      </button>
+                      <div className="ac-menu-divider" />
+                      <button
+                        className="ac-menu-item ac-menu-item-danger"
+                        onClick={() => {
+                          setConfirmDelete(c);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <Trash2 size={13} /> Delete
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
 
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={8} className="cx-empty">
-                  <UserX size={28} />
-                  <div>No customers match your filters.</div>
+                <td colSpan={7} className="ac-empty">
+                  No customers match your filters.
                 </td>
               </tr>
             )}
@@ -199,177 +316,69 @@ export default function Customers() {
         </table>
       </div>
 
-      {/* ---------- Drawer ---------- */}
-      {selected && (
-        <CustomerDrawer
-          customer={selected}
-          onClose={() => setSelected(null)}
-          onOpenInvestigation={handleOpenInvestigation}
+      {/* ============ Create/Edit drawer ============ */}
+      {editing && (
+        <CustomerFormDrawer
+          customer={editing === "new" ? null : editing}
+          onSave={saveCustomer}
+          onClose={() => setEditing(null)}
+        />
+      )}
+
+      {/* ============ Delete confirmation ============ */}
+      {confirmDelete && (
+        <div
+          className="ac-confirm-backdrop"
+          onClick={() => setConfirmDelete(null)}
+        >
+          <div
+            className="ac-confirm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Delete customer?</h3>
+            <p>
+              "<strong>{confirmDelete.name}</strong>" and their associated
+              records will be permanently removed. This cannot be undone.
+            </p>
+            <div className="ac-confirm-actions">
+              <button
+                className="ac-btn ac-btn-ghost"
+                onClick={() => setConfirmDelete(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="ac-btn ac-btn-danger"
+                onClick={() => deleteCustomer(confirmDelete)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============ Click outside to close menu ============ */}
+      {openMenuId && (
+        <div
+          className="ac-menu-backdrop"
+          onClick={() => setOpenMenuId(null)}
         />
       )}
     </div>
   );
 }
 
-/* ============================================================
-   Customer Risk Profile Drawer
-   ============================================================ */
-function CustomerDrawer({ customer: c, onClose, onOpenInvestigation }) {
+function KPI({ icon: Icon, label, value, tone }) {
   return (
-    <div className="cx-drawer-backdrop" onClick={onClose}>
-      <aside
-        className="cx-drawer"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-label={`Customer profile ${c.id}`}
-      >
-        {/* Header */}
-        <header className="cx-drawer-header">
-          <div className="cx-drawer-heading">
-            <div className="cx-avatar cx-avatar--lg">{initials(c.name)}</div>
-            <div>
-              <div className="cx-drawer-eyebrow">{c.id}</div>
-              <h2 className="cx-drawer-title">{c.name}</h2>
-              <div className="cx-drawer-sub">
-                <span className={`cx-badge cx-badge--${riskSlug(c.riskLevel)}`}>
-                  {c.riskLevel}
-                </span>
-                <span className="cx-dot" />
-                <span className="cx-muted">Risk Score {c.riskScore}/100</span>
-              </div>
-            </div>
-          </div>
-          <button
-            className="cx-icon-btn"
-            onClick={onClose}
-            aria-label="Close drawer"
-          >
-            <X size={18} />
-          </button>
-        </header>
-
-        {/* Body */}
-        <div className="cx-drawer-body">
-          {/* Contact + account info */}
-          <section className="cx-info-grid">
-            <Info label="Email" value={c.email} />
-            <Info label="Phone" value={c.phone} />
-            <Info
-              label="Location"
-              value={c.location}
-              icon={<MapPin size={12} />}
-            />
-            <Info
-              label="Account Age"
-              value={`${c.accountAgeDays} days`}
-              icon={<Clock size={12} />}
-            />
-            <Info
-              label="Account Status"
-              value={
-                <span
-                  className={`cx-badge cx-badge--status-${c.accountStatus.toLowerCase()}`}
-                >
-                  {c.accountStatus}
-                </span>
-              }
-            />
-          </section>
-
-          {/* Transaction behavior */}
-          <section>
-            <h3 className="cx-section-title">Transaction Behavior</h3>
-            <div className="cx-stat-grid">
-              <Stat
-                label="Total Transactions"
-                value={c.totalTransactions.toLocaleString()}
-              />
-              <Stat label="Total Value" value={formatCurrency(c.totalValue)} />
-              <Stat
-                label="Avg Transaction"
-                value={formatCurrency(c.avgTransaction)}
-              />
-              <Stat label="Failed" value={c.failedTransactions} tone="warn" />
-              <Stat
-                label="Suspicious"
-                value={c.suspiciousTransactions}
-                tone="danger"
-              />
-            </div>
-          </section>
-
-          {/* Risk signals */}
-          <section>
-            <h3 className="cx-section-title">
-              <ShieldAlert size={14} /> Risk Signals
-            </h3>
-            {c.riskSignals.length === 0 ? (
-              <div className="cx-empty-note">No active risk signals.</div>
-            ) : (
-              <ul className="cx-signal-list">
-                {c.riskSignals.map((s, i) => (
-                  <li key={i} className={`cx-signal cx-signal--${s.severity}`}>
-                    <span className="cx-signal-dot" />
-                    {s.label}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-
-          {/* Device history */}
-          <section>
-            <h3 className="cx-section-title">
-              <Smartphone size={14} /> Device History
-            </h3>
-            <ul className="cx-device-list">
-              {c.devices.map((d) => (
-                <li key={d.id} className="cx-device-item">
-                  <span className="cx-device-id">{d.id}</span>
-                  <span
-                    className={`cx-device-tag ${
-                      d.label === "Current" ? "cx-device-tag--current" : ""
-                    }`}
-                  >
-                    {d.label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        {/* Footer */}
-        <footer className="cx-drawer-footer">
-          <button
-            className="cx-btn cx-btn--primary"
-            onClick={() => onOpenInvestigation(c)}
-          >
-            Open Investigation <ArrowUpRight size={14} />
-          </button>
-        </footer>
-      </aside>
-    </div>
-  );
-}
-
-function Info({ label, value, icon }) {
-  return (
-    <div className="cx-info">
-      <div className="cx-info-label">
-        {icon}
-        {label}
+    <div className={`ac-kpi ${tone}`}>
+      <div className="ac-kpi-icon">
+        <Icon size={18} />
       </div>
-      <div className="cx-info-value">{value}</div>
-    </div>
-  );
-}
-
-function Stat({ label, value, tone }) {
-  return (
-    <div className={`cx-stat ${tone ? `cx-stat--${tone}` : ""}`}>
-      <div className="cx-stat-value">{value}</div>
-      <div className="cx-stat-label">{label}</div>
+      <div className="ac-kpi-body">
+        <div className="ac-kpi-label">{label}</div>
+        <div className="ac-kpi-value mono">{value}</div>
+      </div>
     </div>
   );
 }

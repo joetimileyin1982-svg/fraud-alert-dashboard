@@ -5,7 +5,7 @@ import { customers } from "../../src/data/customers";
 import { transactions } from "../../src/data/transactions";
 import { computeRiskScore, riskBucket, riskLabel } from "../../src/data/FraudRules";
 import { formatCurrency } from "../../src/utils/format";
-import CustomerRiskProfile from "../../components/customers/CustomersRiskProfile"
+import CustomerRiskProfile from "../../components/analyst/customers/CustomersRiskProfile"
 import "./styles/Customers.css";
 
 const RISK_FILTERS = ["All", "Safe", "Suspicious", "High Risk", "Critical"];

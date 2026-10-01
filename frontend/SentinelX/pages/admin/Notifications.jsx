@@ -7,26 +7,26 @@ import {
   AlertTriangle,
   Info,
   CheckCircle2,
+  Cpu,
   ShieldAlert,
-  Folder,
-  Users as UsersIcon,
   FileText,
+  Users as UsersIcon,
   ChevronRight,
   Bell,
   BellOff,
 } from "lucide-react";
 import {
-  analystNotifications,
-  ANALYST_NOTIFICATION_CATEGORIES,
-  ANALYST_NOTIFICATION_SEVERITIES,
-} from "../../src/data/analystNotifications";
-import "./styles/Notification.css";
+  adminNotifications,
+  ADMIN_NOTIFICATION_CATEGORIES,
+  ADMIN_NOTIFICATION_SEVERITIES,
+} from "../../src/data/adminNotifications";
+import "./styles/Notifications.css";
 
 const CATEGORY_ICONS = {
-  Alerts: ShieldAlert,
-  Cases: Folder,
-  Customers: UsersIcon,
+  System: Cpu,
+  Rules: ShieldAlert,
   Reports: FileText,
+  Users: UsersIcon,
 };
 
 const SEVERITY_ICONS = {
@@ -49,7 +49,7 @@ function timeAgo(iso) {
 
 export default function Notifications() {
   const navigate = useNavigate();
-  const [items, setItems] = useState(analystNotifications);
+  const [items, setItems] = useState(adminNotifications);
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [severityFilter, setSeverityFilter] = useState("All");
@@ -99,7 +99,7 @@ export default function Notifications() {
               <span className="ntf-unread-badge">{unreadCount}</span>
             )}
           </h1>
-          <p>Alerts, case assignments, and customer activity.</p>
+          <p>System alerts, rule warnings, and platform events.</p>
         </div>
         {unreadCount > 0 && (
           <button className="ntf-mark-all" onClick={markAllRead}>
@@ -129,7 +129,7 @@ export default function Notifications() {
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
-            {ANALYST_NOTIFICATION_CATEGORIES.map((c) => (
+            {ADMIN_NOTIFICATION_CATEGORIES.map((c) => (
               <option key={c} value={c}>
                 {c === "All" ? "All Categories" : c}
               </option>
@@ -141,7 +141,7 @@ export default function Notifications() {
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
           >
-            {ANALYST_NOTIFICATION_SEVERITIES.map((s) => (
+            {ADMIN_NOTIFICATION_SEVERITIES.map((s) => (
               <option key={s} value={s}>
                 {s === "All" ? "All Severities" : s}
               </option>

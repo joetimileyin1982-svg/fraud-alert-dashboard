@@ -1,11 +1,11 @@
 import React from "react";
 import "./styles/Dashboard.css";
-import StatCard from "../../components/dashboard/StatCard";
-import TransactionTrendChart from "../../components/analytics/TransactionTrendChart";
-import RiskDistributionChart from "../../components/analytics/RiskDistributionChart";
-import TopRules from "../../components/analytics/TopRules";
-import TransactionTable from "../../components/transactions/TransactionTable";
-import RightPanel from "../../components/layout/RightPanel";
+import StatCard from "../../components/analyst/dashboard/StatCard";
+import TransactionTrendChart from "../../components/analyst/analytics/TransactionTrendChart";
+import RiskDistributionChart from "../../components/analyst/analytics/RiskDistributionChart";
+import TopRules from "../../components/analyst/analytics/TopRules";
+import TransactionTable from "../../components/analyst/transactions/TransactionTable";
+import RightPanel from "../../components/analyst/layout/RightPanel";
 
 import {
   CircleCheckBig,

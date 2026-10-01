@@ -7,8 +7,8 @@ import {
   ShieldAlert,
   ArrowUpRight,
 } from "lucide-react";
-import { transactions } from "../../src/data/transactions";
-import { computeRiskScore, riskBucket } from "../../src/data/FraudRules";
+import { transactions } from "../../../src/data/transactions";
+import { computeRiskScore, riskBucket } from "../../../src/data/FraudRules";
 import "./CustomerRiskProfile.css";
 
 const formatCurrency = (n) =>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { X, ArrowRight } from "lucide-react";
-import { formatCurrency } from "../../src/utils/format";
+import { formatCurrency } from "../../../src/utils/format";
 import "./ThreatDrawer.css";
 
 export default function ThreatDrawer({ threat, onClose }) {

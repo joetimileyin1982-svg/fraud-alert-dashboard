@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, SlidersHorizontal } from "lucide-react";
 import TransactionDrawer from "./TransactionDrawer";
-import { transactions } from "../../src/data/transactions";
-import { computeRiskScore } from "../../src/data/FraudRules";
-import { formatCurrency } from "../../src/utils/format";
+import { transactions } from "../../../src/data/transactions";
+import { computeRiskScore } from "../../../src/data/FraudRules";
+import { formatCurrency } from "../../../src/utils/format";
 import "./TransactionTable.css";
 
 const riskBucket = (r) => {

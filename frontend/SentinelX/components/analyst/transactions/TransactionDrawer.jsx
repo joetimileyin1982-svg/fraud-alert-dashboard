@@ -1,6 +1,6 @@
 import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import { FRAUD_RULES } from "../../src/data/FraudRules";
-import { formatCurrency } from "../../src/utils/format";
+import { FRAUD_RULES } from "../../../src/data/FraudRules";
+import { formatCurrency } from "../../../src/utils/format";
 import "./TransactionDrawer.css";
 
 const riskLevel = (score) => {

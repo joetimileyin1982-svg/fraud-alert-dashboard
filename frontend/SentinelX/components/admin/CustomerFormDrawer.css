@@ -1,0 +1,221 @@
+/* ============================================================
+   Customer Form Drawer
+   ============================================================ */
+
+.cfd-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,0.6);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  animation: cfdFade 0.18s ease-out;
+}
+@keyframes cfdFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes cfdSlide {
+  from { transform: translateX(24px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.cfd-drawer {
+  width: min(500px, 100%);
+  height: 100%;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  animation: cfdSlide 0.22s ease-out;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  font-size: 13.5px;
+}
+
+/* Header */
+.cfd-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.cfd-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #22d3ee;
+  margin-bottom: 4px;
+}
+.cfd-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.25;
+}
+.cfd-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.cfd-close:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+/* Body */
+.cfd-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.cfd-body::-webkit-scrollbar { width: 8px; }
+.cfd-body::-webkit-scrollbar-track { background: transparent; }
+.cfd-body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 2px solid var(--surface);
+}
+
+/* Section titles */
+.cfd-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.cfd-section-title:first-child {
+  margin-top: 0;
+}
+
+/* Fields */
+.cfd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cfd-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.cfd-field input[type="text"],
+.cfd-field input[type="email"],
+.cfd-field input[type="number"],
+.cfd-field select {
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.cfd-field input:focus,
+.cfd-field select:focus {
+  border-color: #22d3ee;
+}
+.cfd-field input::placeholder {
+  color: #475569;
+}
+.cfd-field input[type="number"] {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Two-column row */
+.cfd-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Hint */
+.cfd-hint {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  background: rgba(34,211,238,0.05);
+  border: 1px solid rgba(34,211,238,0.15);
+  border-radius: 8px;
+}
+
+/* Footer */
+.cfd-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.cfd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.cfd-btn-ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+.cfd-btn-ghost:hover {
+  border-color: #22d3ee;
+  color: #22d3ee;
+}
+.cfd-btn-primary {
+  background: rgba(34,211,238,0.10);
+  border-color: rgba(34,211,238,0.45);
+  color: #22d3ee;
+}
+.cfd-btn-primary:hover {
+  background: rgba(34,211,238,0.20);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .cfd-drawer { width: 100%; }
+  .cfd-head,
+  .cfd-body,
+  .cfd-foot { padding-left: 18px; padding-right: 18px; }
+  .cfd-two-col { grid-template-columns: 1fr; }
+}

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import ThreatItem from "./ThreatItem";
 import ThreatDrawer from "./ThreatDrawer";
-import { alertsData } from "../../src/data/AlertsData";
+import { alertsData } from "../../../src/data/AlertsData";
 import "./ThreatIntelligence.css";
 
 export default function ThreatIntelligence() {

@@ -15,7 +15,7 @@ import {
 import { transactions } from "../../src/data/transactions";
 import { computeRiskScore, riskBucket, riskLabel } from "../../src/data/FraudRules";
 import { formatCurrency } from "../../src/utils/format";
-import TransactionDrawer from "../../components/transactions/TransactionDrawer";
+import TransactionDrawer from "../../components/analyst/transactions/TransactionDrawer";
 import "./styles/Transactions.css";
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50];

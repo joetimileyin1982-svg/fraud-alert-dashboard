@@ -8,10 +8,10 @@ import {
   ShieldAlert,
   X,
 } from "lucide-react";
-import { customers } from "../../src/data/customers";
-import { transactions } from "../../src/data/transactions";
-import { alertsData } from "../../src/data/AlertsData";
-import { formatCurrency } from "../../src/utils/format";
+import { customers } from "../src/data/customers";
+import { transactions } from "../src/data/transactions";
+import { alertsData } from "../src/data/AlertsData";
+import { formatCurrency } from "../src/utils/format";
 import "./GlobalSearch.css";
 
 const MAX_PER_GROUP = 4;

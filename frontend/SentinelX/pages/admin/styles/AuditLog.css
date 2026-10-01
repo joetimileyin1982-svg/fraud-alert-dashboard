@@ -1,0 +1,288 @@
+/* ============================================================
+   Audit Log Page
+   ============================================================ */
+
+.al-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+}
+
+/* ============ Header ============ */
+.al-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.al-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 2px;
+}
+.al-header p {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ============ Toolbar ============ */
+.al-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.al-search {
+  flex: 1;
+  min-width: 240px;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: var(--muted);
+}
+.al-search:focus-within { border-color: #22d3ee; }
+.al-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 12.5px;
+  font-family: inherit;
+  min-width: 0;
+}
+.al-search input::placeholder { color: #475569; }
+.al-search button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+.al-search button:hover { color: #22d3ee; }
+
+.al-selects {
+  display: flex;
+  gap: 8px;
+}
+.al-select {
+  background: var(--sidebar);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+.al-select:focus { border-color: #22d3ee; }
+
+/* ============ Summary strip ============ */
+.al-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.al-summary-count {
+  font-size: 12px;
+  color: var(--muted);
+}
+.al-clear {
+  background: none;
+  border: none;
+  color: #22d3ee;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+.al-clear:hover { text-decoration: underline; }
+
+/* ============ Feed ============ */
+.al-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.al-day-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.al-day-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 600;
+  padding-left: 2px;
+}
+
+.al-day-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ============ Entry ============ */
+.al-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+.al-entry:last-child { border-bottom: none; }
+.al-entry:hover {
+  background: rgba(34,211,238,0.03);
+}
+
+/* Left icon */
+.al-entry-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.al-entry-icon.cat-rule          { color: #f472b6; background: rgba(244,114,182,0.12); }
+.al-entry-icon.cat-transaction   { color: #22d3ee; background: rgba(34,211,238,0.12); }
+.al-entry-icon.cat-investigation { color: #a855f7; background: rgba(168,85,247,0.12); }
+.al-entry-icon.cat-user          { color: #34d399; background: rgba(52,211,153,0.12); }
+.al-entry-icon.cat-report        { color: #fbbf24; background: rgba(251,191,36,0.12); }
+.al-entry-icon.cat-system        { color: #94a3b8; background: rgba(148,163,184,0.12); }
+
+/* Body */
+.al-entry-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.al-entry-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.al-entry-actor {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.al-entry-role {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.al-entry-role.role-administrator {
+  color: #a855f7;
+  background: rgba(168,85,247,0.10);
+  border-color: rgba(168,85,247,0.35);
+}
+.al-entry-role.role-fraud-analyst {
+  color: #22d3ee;
+  background: rgba(34,211,238,0.10);
+  border-color: rgba(34,211,238,0.35);
+}
+.al-entry-role.role-system {
+  color: #94a3b8;
+  background: rgba(148,163,184,0.10);
+  border-color: rgba(148,163,184,0.30);
+}
+
+.al-entry-time {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+.al-entry-action {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.al-entry-target {
+  font-size: 12.5px;
+  color: #22d3ee;
+  margin-bottom: 2px;
+}
+.al-entry-details {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* Right severity dot */
+.al-entry-severity {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-top: 4px;
+}
+.al-entry-severity.sev-info     { color: #22d3ee; background: rgba(34,211,238,0.10); }
+.al-entry-severity.sev-warn     { color: #fbbf24; background: rgba(251,191,36,0.12); }
+.al-entry-severity.sev-critical { color: #ef4444; background: rgba(239,68,68,0.12); }
+
+/* ============ Empty ============ */
+.al-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px 20px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.al-empty svg { color: #22d3ee; }
+
+/* ============ Responsive ============ */
+@media (max-width: 640px) {
+  .al-search { max-width: 100%; }
+  .al-selects { width: 100%; }
+  .al-select { flex: 1; }
+  .al-entry-time { margin-left: 0; }
+  .al-entry-top { gap: 6px; }
+}
