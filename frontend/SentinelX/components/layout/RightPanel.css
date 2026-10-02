@@ -1,0 +1,31 @@
+/* ============================================================
+   Right Panel — container for the Threat Intelligence feed
+   ============================================================ */
+
+.rightPanel {
+  width: 320px;
+  flex-shrink: 0;
+  height: 100%;
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 16px 14px;
+  box-sizing: border-box;
+  background: rgba(7, 20, 35, 0.3);
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.rightPanel::-webkit-scrollbar {
+  width: 6px;
+}
+.rightPanel::-webkit-scrollbar-track {
+  background: transparent;
+}
+.rightPanel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+.rightPanel::-webkit-scrollbar-thumb:hover {
+  background: #22d3ee;
+}

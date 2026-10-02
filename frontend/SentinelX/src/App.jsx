@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "../context/AuthContext";
 import Sidebar from "../components/layout/SideBar";
 import TopBar from "../components/layout/TopBar";
+import RightPanel from "../components/layout/RightPanel";
 import "./App.css";
 
 // Auth
@@ -65,16 +66,19 @@ function ProtectedShell() {
               <Route path="/analyst/notifications" element={<AnalystNotifications />} />
               <Route path="/analyst/reports" element={<AnalystReports />} />
 
-              {/* Redirect legacy singular route */}
+              {/* Legacy singular route → plural */}
               <Route
                 path="/analyst/investigation"
                 element={<Navigate to="/analyst/investigations" replace />}
               />
 
-              {/* ============ Fallback ============ */}
+              {/* Fallback */}
               <Route path="*" element={<Navigate to={fallback} replace />} />
             </Routes>
           </div>
+
+          {/* Right panel — analyst-only */}
+          {!isAdmin && <RightPanel />}
         </div>
       </div>
     </div>

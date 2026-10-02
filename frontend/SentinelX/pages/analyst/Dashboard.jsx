@@ -5,7 +5,7 @@ import TransactionTrendChart from "../../components/analyst/analytics/Transactio
 import RiskDistributionChart from "../../components/analyst/analytics/RiskDistributionChart";
 import TopRules from "../../components/analyst/analytics/TopRules";
 import TransactionTable from "../../components/analyst/transactions/TransactionTable";
-import RightPanel from "../../components/analyst/layout/RightPanel";
+
 
 import {
   CircleCheckBig,
