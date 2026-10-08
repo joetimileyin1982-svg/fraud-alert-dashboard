@@ -85,7 +85,6 @@ export default function Customers() {
     });
   }, [enriched, query, statusFilter]);
 
-  // ============ Actions ============
   const toggleStatus = (customer) => {
     setCustomers((prev) =>
       prev.map((c) =>
@@ -109,12 +108,10 @@ export default function Customers() {
 
   const saveCustomer = (customer) => {
     if (customer.id) {
-      // Update
       setCustomers((prev) =>
         prev.map((c) => (c.id === customer.id ? { ...c, ...customer } : c))
       );
     } else {
-      // Create
       const newCustomer = {
         ...customer,
         id: `CUST-${String(1200 + customers.length + 1).padStart(4, "0")}`,
@@ -129,7 +126,7 @@ export default function Customers() {
 
   return (
     <div className="ac-page">
-      {/* ============ Header ============ */}
+      {/* Header */}
       <header className="ac-header">
         <div>
           <h1>Customers</h1>
@@ -148,35 +145,15 @@ export default function Customers() {
         </div>
       </header>
 
-      {/* ============ KPI strip ============ */}
+      {/* KPI strip */}
       <section className="ac-kpi-row">
-        <KPI
-          icon={Users}
-          label="Total Customers"
-          value={kpis.total}
-          tone="cyan"
-        />
-        <KPI
-          icon={UserCheck}
-          label="Active"
-          value={kpis.active}
-          tone="green"
-        />
-        <KPI
-          icon={UserX}
-          label="Suspended"
-          value={kpis.suspended}
-          tone="red"
-        />
-        <KPI
-          icon={AlertTriangle}
-          label="High Risk"
-          value={kpis.highRisk}
-          tone="pink"
-        />
+        <KPI icon={Users} label="Total Customers" value={kpis.total} tone="cyan" />
+        <KPI icon={UserCheck} label="Active" value={kpis.active} tone="green" />
+        <KPI icon={UserX} label="Suspended" value={kpis.suspended} tone="red" />
+        <KPI icon={AlertTriangle} label="High Risk" value={kpis.highRisk} tone="pink" />
       </section>
 
-      {/* ============ Toolbar ============ */}
+      {/* Toolbar */}
       <section className="ac-toolbar">
         <div className="ac-search">
           <Search size={16} />
@@ -205,7 +182,7 @@ export default function Customers() {
         </div>
       </section>
 
-      {/* ============ Table ============ */}
+      {/* Table */}
       <div className="ac-table-wrap">
         <table className="ac-table">
           <thead>
@@ -316,7 +293,7 @@ export default function Customers() {
         </table>
       </div>
 
-      {/* ============ Create/Edit drawer ============ */}
+      {/* Create/Edit drawer */}
       {editing && (
         <CustomerFormDrawer
           customer={editing === "new" ? null : editing}
@@ -325,7 +302,7 @@ export default function Customers() {
         />
       )}
 
-      {/* ============ Delete confirmation ============ */}
+      {/* Delete confirmation */}
       {confirmDelete && (
         <div
           className="ac-confirm-backdrop"
@@ -358,7 +335,7 @@ export default function Customers() {
         </div>
       )}
 
-      {/* ============ Click outside to close menu ============ */}
+      {/* Click outside to close menu */}
       {openMenuId && (
         <div
           className="ac-menu-backdrop"

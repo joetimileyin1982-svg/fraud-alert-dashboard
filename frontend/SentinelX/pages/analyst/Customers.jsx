@@ -3,9 +3,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search, X, ChevronRight, UserX } from "lucide-react";
 import { customers } from "../../src/data/customers";
 import { transactions } from "../../src/data/transactions";
-import { computeRiskScore, riskBucket, riskLabel } from "../../src/data/FraudRules";
+import {
+  computeRiskScore,
+  riskBucket,
+  riskLabel,
+} from "../../src/data/FraudRules";
 import { formatCurrency } from "../../src/utils/format";
-import CustomerRiskProfile from "../../components/analyst/customers/CustomersRiskProfile"
 import "./styles/Customers.css";
 
 const RISK_FILTERS = ["All", "Safe", "Suspicious", "High Risk", "Critical"];
@@ -27,7 +30,6 @@ export default function Customers() {
 
   const [query, setQuery] = useState(searchParams.get("search") || "");
   const [riskFilter, setRiskFilter] = useState("All");
-  const [selected, setSelected] = useState(null);
 
   const enriched = useMemo(
     () =>
@@ -104,7 +106,11 @@ export default function Customers() {
           </thead>
           <tbody>
             {filtered.map((c) => (
-              <tr key={c.id} onClick={() => setSelected(c)}>
+              <tr
+                key={c.id}
+                className="cx-row"
+                onClick={() => navigate(`/analyst/customers/${c.id}`)}
+              >
                 <td>
                   <div className="cx-name">{c.name}</div>
                   <div className="cx-id">{c.id}</div>
@@ -113,7 +119,9 @@ export default function Customers() {
                   <span className={`cx-badge ${c.bucket}`}>{c.label}</span>
                 </td>
                 <td className="num">
-                  <span className={`cx-score mono ${c.bucket}`}>{c.score}</span>
+                  <span className={`cx-score mono ${c.bucket}`}>
+                    {c.score}
+                  </span>
                 </td>
                 <td className="num">{c.totalTransactions.toLocaleString()}</td>
                 <td className="num">{formatCurrency(c.totalValue)}</td>
@@ -141,18 +149,6 @@ export default function Customers() {
           </tbody>
         </table>
       </div>
-
-      {selected && (
-        <CustomerRiskProfile
-          customer={selected}
-          onClose={() => setSelected(null)}
-          onOpenInvestigation={(c) =>
-            navigate(
-              `/analyst/investigations/new?customer=${encodeURIComponent(c.id)}`
-            )
-          }
-        />
-      )}
     </div>
   );
 }

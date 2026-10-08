@@ -13,6 +13,7 @@ import Register from "../pages/auth/Register";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminTransactions from "../pages/admin/Transactions";
 import AdminCustomers from "../pages/admin/Customers";
+import CustomerDetail from "../pages/admin/CustomerDetail";
 import FraudRules from "../pages/admin/FraudRules";
 import AdminNotifications from "../pages/admin/Notifications";
 import AuditLog from "../pages/admin/AuditLog";
@@ -51,6 +52,7 @@ function ProtectedShell() {
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/transactions" element={<AdminTransactions />} />
               <Route path="/admin/customers" element={<AdminCustomers />} />
+              <Route path="/admin/customers/:id" element={<CustomerDetail />} />
               <Route path="/admin/rules" element={<FraudRules />} />
               <Route path="/admin/notifications" element={<AdminNotifications />} />
               <Route path="/admin/audit-log" element={<AuditLog />} />
