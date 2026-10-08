@@ -17,7 +17,7 @@ import {
 import { formatCurrency } from "../../src/utils/format";
 import "./CustomerDetail.css";
 
-export default function CustomerDetail() {
+export default function AdminCustomerDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
