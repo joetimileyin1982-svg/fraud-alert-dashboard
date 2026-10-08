@@ -15,11 +15,23 @@ const generateToken = (user) => {
   );
 };
 
-const registerUser = async ({ name, email, password }) => {
-  const existingUser = await User.findOne({ email });
+// 1. STRENGTHEN REGISTRATION: Check BOTH details
+const registerUser = async ({ name, email, password, phone }) => {
+  // Check if email already exists
+  const emailExists = await User.findOne({ email });
+  if (emailExists) {
+    throw new Error("Email address is already registered");
+  }
 
-  if (existingUser) {
-    throw new Error("Email already registered");
+  // Check if phone number already exists
+  const phoneExists = await User.findOne({ phone });
+  if (phoneExists) {
+    throw new Error("Phone number is already registered");
+  }
+
+  // Basic structure verification
+  if (!email.includes('@') || phone.length < 7) {
+    throw new Error("Please provide a valid email structure and a complete phone number");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -27,31 +39,40 @@ const registerUser = async ({ name, email, password }) => {
   const user = await User.create({
     name,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    phone
   });
 
   return {
     id: user._id,
     name: user.name,
     email: user.email,
+    phone: user.phone,
     role: user.role
   };
 };
 
-const loginUser = async ({ email, password }) => {
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    throw new Error("Invalid email or password");
+// 2. DUAL LOGIN: Allows logging in with Email OR Phone Number
+const loginUser = async ({ loginIdentifier, password }) => {
+  if (!loginIdentifier || !password) {
+    throw new Error("Please provide your login credentials");
   }
 
-  const passwordMatches = await bcrypt.compare(
-    password,
-    user.password
-  );
+  // Search database for a match on either the email field OR the phone field
+  const user = await User.findOne({
+    $or: [
+      { email: loginIdentifier.toLowerCase().trim() },
+      { phone: loginIdentifier.trim() }
+    ]
+  });
 
+  if (!user) {
+    throw new Error("Invalid credentials provided");
+  }
+
+  const passwordMatches = await bcrypt.compare(password, user.password);
   if (!passwordMatches) {
-    throw new Error("Invalid email or password");
+    throw new Error("Invalid credentials provided");
   }
 
   const token = generateToken(user);
@@ -62,6 +83,7 @@ const loginUser = async ({ email, password }) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
       role: user.role
     }
   };

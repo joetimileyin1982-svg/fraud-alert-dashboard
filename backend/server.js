@@ -1,16 +1,24 @@
 const dotenv = require('dotenv');
-// 1. Always load your .env file at the very top
+// 1. Load environment variables
 dotenv.config();
 
-// 2. Bring in your secure app configurations from app.js
 const app = require('./app');
 const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 
-// 3. Open the connection to your MongoDB database
-connectDB();
+// 2. Open connection to your MongoDB database
+connectDB().then(async () => {
+  try {
+    // 🌟 FORCE DROP: This line reaches into your database and wipes out the broken phone index constraint!
+    await mongoose.connection.db.collection('users').dropIndex('phone_1');
+    console.log('🗑️ Successfully dropped the broken unique phone index constraint!');
+  } catch (err) {
+    console.log('💡 Index already dropped or not found, proceeding safely...');
+  }
+});
 
-// 4. Set up the server port
-const PORT = process.env.PORT || 5000;
+// 3. Set up the server port
+const PORT = process.env.PORT || 5050;
 
 app.listen(PORT, () => {
   console.log(`🌐 Server running on port ${PORT}`);

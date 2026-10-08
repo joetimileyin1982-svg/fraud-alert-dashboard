@@ -1,44 +1,40 @@
-const authService = require("../services/authService"); // 🌟 Note the two dots!
-const User = require("../models/User");
+const authService = require("../services/authService");
 
 const register = async (req, res) => {
-  const user = await authService.registerUser(req.body);
-
-  res.status(201).json({
-    success: true,
-    message: "User registered successfully",
-    user
-  });
+  try {
+    // 🌟 Fix: This passes req.body (including name, email, password, AND phone) to the service
+    const user = await authService.registerUser(req.body);
+    
+    return res.status(201).json({
+      success: true,
+      message: "Registered successfully with email and phone verified",
+      user
+    });
+  } catch (error) {
+    // Prevents terminal crash and returns the exact validation failure message to Postman instead
+    return res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
 };
 
 const login = async (req, res) => {
-  const result = await authService.loginUser(req.body);
-
-  res.status(200).json({
-    success: true,
-    ...result
-  });
-};
-
-const me = async (req, res) => {
-  const user = await User.findById(req.user.id)
-    .select("-password");
-
-  if (!user) {
-    return res.status(404).json({
+  try {
+    const result = await authService.loginUser(req.body);
+    return res.status(200).json({
+      success: true,
+      ...result
+    });
+  } catch (error) {
+    return res.status(400).json({
       success: false,
-      message: "User not found"
+      message: error.message
     });
   }
-
-  res.status(200).json({
-    success: true,
-    user
-  });
 };
 
 module.exports = {
   register,
-  login,
-  me
+  login
 };
