@@ -11,33 +11,30 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
-    const result = login({ email, password });
-    if (!result.ok) {
-      setError(result.error);
-      return;
+    try {
+      const result = await login({ email, password });
+      if (!result.ok) {
+        setError(result.error);
+        setLoading(false);
+        return;
+      }
+
+      const dest =
+        result.user.role === "Administrator"
+          ? "/admin/dashboard"
+          : "/analyst/dashboard";
+      navigate(dest, { replace: true });
+    } catch (err) {
+      setError("Unable to sign in. Please try again.");
+      setLoading(false);
     }
-
-    const dest =
-      result.user.role === "Administrator"
-        ? "/admin/dashboard"
-        : "/analyst/dashboard";
-    navigate(dest, { replace: true });
-  };
-
-  const fillDemo = (role) => {
-    if (role === "admin") {
-      setEmail("admin@sentinelx.io");
-      setPassword("admin123");
-    } else {
-      setEmail("analyst@sentinelx.io");
-      setPassword("analyst123");
-    }
-    setError("");
   };
 
   return (
@@ -99,22 +96,10 @@ export default function Login() {
             </div>
           </label>
 
-          <button type="submit" className="auth-submit">
-            Sign In <ArrowRight size={14} />
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? "Signing in…" : <>Sign In <ArrowRight size={14} /></>}
           </button>
         </form>
-
-        <div className="auth-demo">
-          <span className="auth-demo-label">Demo accounts</span>
-          <div className="auth-demo-buttons">
-            <button type="button" onClick={() => fillDemo("admin")}>
-              Admin
-            </button>
-            <button type="button" onClick={() => fillDemo("analyst")}>
-              Analyst
-            </button>
-          </div>
-        </div>
 
         <div className="auth-foot">
           Don't have an account?{" "}
